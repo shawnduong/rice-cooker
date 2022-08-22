@@ -79,14 +79,21 @@ check_efi()
 	return 1
 }
 
-# $1 = port
-# Keep trying to connect to a port to see if it's open.
+# $1 = flag number
+# Keep trying to detect a flag.
 chck()
 {
 	while true; do
 		sleep 0.1
-		nc -z localhost "$1" && return
+		ls "/tmp/$1" 2>/dev/null 1>/dev/null && return
 	done
+}
+
+# $1 = flag number
+# Mark a flag as complete.
+flag()
+{
+	touch "/tmp/$1"
 }
 
 # Primary controller terminal.
@@ -152,6 +159,54 @@ primary()
 
 	done
 
+	echo ""
+	echo ""
+	echo " Please create a root password."
+	echo ""
+
+	while true; do
+
+		stty -echo
+		read -r -p " Password: " rootPass
+		echo ""
+		read -r -p " Confirm: " confirm
+		stty echo
+
+		if [[ "$rootPass" == "$confirm" ]]; then
+			break;
+		else
+			echo ""
+			echo ""
+			echo " Passwords did not match."
+			echo ""
+		fi
+
+	done
+
+	echo ""
+	echo ""
+	echo " Please create a user password."
+	echo ""
+
+	while true; do
+
+		stty -echo
+		read -r -p " Password: " userPass
+		echo ""
+		read -r -p " Confirm: " confirm
+		stty echo
+
+		if [[ "$userPass" == "$confirm" ]]; then
+			break;
+		else
+			echo ""
+			echo ""
+			echo " Passwords did not match."
+			echo ""
+		fi
+
+	done
+
 	tmux send-keys -t 2 "$device" Enter
 
 	echo ""
@@ -204,6 +259,25 @@ primary()
 	echo -n "   Installing packages "
 	chck 9009
 	echo -e "\033[0;32m Done \033[0;0m"
+
+	# Signal to the secondary to continue.
+	flag 7000
+
+	echo -n "   Generating fstab    "
+	chck 8001
+	echo -e "\033[0;32m Done \033[0;0m"
+
+#	echo -n "   Setting timezone    "
+#	chck 8002
+#	echo -e "\033[0;32m Done \033[0;0m"
+#
+#	echo -n "   Syncing hw clock    "
+#	chck 8003
+#	echo -e "\033[0;32m Done \033[0;0m"
+#
+#	echo -n "   Setting hostname    "
+#	chck 8004
+#	echo -e "\033[0;32m Done \033[0;0m"
 }
 
 # Secondary quick-task terminal.
@@ -218,7 +292,46 @@ secondary()
 	echo -n " Enabling NTP..."
 	timedatectl set-ntp true
 	echo " done."
-	nc -l localhost -p 8000
+	flag 8000
+
+	# Wait for the signal from the controller to continue.
+	chck 7000
+
+	# Generate the fstab.
+	echo -n " Generating fstab..."
+	genfstab -U /mnt >> /mnt/etc/fstab
+	echo " done."
+	flag 8001
+
+#	# chroot.
+#	echo -n " Chrooting to install..."
+#	arch-chroot /mnt
+#	echo " done."
+#
+#	# Set the timezone.
+#	echo -n " Setting timezone..."
+#	ln -sf "/usr/share/zoneinfo/$TIMEZONE" /etc/localtime
+#	echo " done."
+#	flag 8002
+#
+#	# Synchronize the hardware clock.
+#	echo -n " Synchronizing hardware clock..."
+#	hwclock --systohc
+#	echo " done."
+#	flag 8003
+#
+#	# Set the hostname.
+#	echo -n "Setting hostname..."
+#	echo "$HOSTNAME" > /etc/hostname
+#	echo " done."
+#	flag 8004
+#
+#	# Add localhost to hosts.
+#	echo -n "Adding localhost self to hosts..."
+#	echo "" >> /etc/hosts
+#	echo "127.0.0.1  $HOSTNAME.net  $HOSTNAME" >> /etc/hosts
+#	echo "::1        $HOSTNAME.net  $HOSTNAME" >> /etc/hosts
+#	echo " done."
 }
 
 # Tertiary long-task terminal.
@@ -239,7 +352,7 @@ tertiary()
 	sgdisk --new "0:0:0" -t 0:8e00 "/dev/$device" >/dev/null
 	echo " done."
 
-	nc -l localhost -p 9000
+	flag 9000
 
 	if [[ "$device" == "nvme*" ]]; then
 		devBoot="/dev/${device}p1"
@@ -254,7 +367,7 @@ tertiary()
 	mkfs.fat -F32 "$devBoot" >/dev/null
 	echo " done."
 	stty -echo
-	nc -l localhost -p 9001
+	flag 9001
 
 	# Format the LVM partition.
 
@@ -267,7 +380,7 @@ tertiary()
 	echo -n " Formatting the LVM partition..."
 	echo -n "$encKey" | cryptsetup -q luksFormat "$devLvm"
 	echo " done."
-	nc -l localhost -p 9002
+	flag 9002
 
 	# Partition the LVM partition.
 
@@ -293,25 +406,25 @@ tertiary()
 	fi
 	echo " done."
 
-	nc -l localhost -p 9003
+	flag 9003
 
 	# Make the swap.
 	echo -n " Making swap..."
 	mkswap /dev/vg0/swap >/dev/null
 	echo " done."
-	nc -l localhost -p 9004
+	flag 9004
 
 	# Format root.
 	echo -n " Formatting root..."
 	mkfs.ext4 -q /dev/vg0/root
 	echo " done."
-	nc -l localhost -p 9005
+	flag 9005
 
 	# Format home.
 	echo -n " Formatting home..."
 	mkfs.ext4 -q /dev/vg0/home
 	echo " done."
-	nc -l localhost -p 9006
+	flag 9006
 
 	# Mount everything.
 
@@ -328,19 +441,23 @@ tertiary()
 	mount /dev/vg0/home /mnt/home
 	echo " done."
 
-	nc -l localhost -p 9007
+	flag 9007
 
 	# Enable swap.
 	echo -n " Enabling swap..."
 	swapon /dev/vg0/swap
 	echo " done."
-	nc -l localhost -p 9008
+	flag 9008
 
-#	# Install essential packages.
-#	echo " Installing essential packages... this may take a while."
-#	pacstrap /mnt base base-devel linux linux-firmware lvm2
-#	echo " Installing essential packages... done."
-#	nc -l localhost -p 9009
+	# Install essential packages.
+	cat /etc/pacman.conf | sed -e "s/#ParallelDownloads = 5/ParallelDownloads = 5/" > /tmp/buffer
+	mv /tmp/buffer /etc/pacman.conf
+	echo -e " Installing essential packages... this may take a while."
+	echo -e " \033[0;33m===[ PACKAGE INSTALLATION LOGS ]====\033[0;0m"
+	pacstrap /mnt base base-devel linux linux-firmware lvm2 networkmanager vim
+	echo -e " \033[0;33m====================================\033[0;0m"
+	echo -e " Installing essential packages... done."
+	flag 9009
 }
 
 main()
