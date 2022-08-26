@@ -3,6 +3,7 @@
 # Rice cooker configuration:
 # Locale
 TIMEZONE="US/Pacific"
+LOCALE="en_US.UTF-8 UTF-8"
 # Disk
 ENCRYPT="Yes"
 # Partitions
@@ -129,6 +130,16 @@ check_chroot()
 	while true; do
 		sleep 0.1
 		ls "/mnt/tmp/$1" &>/dev/null && echo -e "\033[0;32m Done \033[0;0m" && return
+	done
+}
+
+# Silent check.
+# $1 = flag number
+check_chroot_silent()
+{
+	while true; do
+		sleep 0.1
+		ls "/mnt/tmp/$1" &>/dev/null && return
 	done
 }
 
@@ -334,6 +345,36 @@ install_essential_packages()
 	flag 3009
 }
 
+# Configure the bootloader. Flags 2011.
+# $1 = device
+configure_bootloader()
+{
+	echo -n " Configuring bootloader..."
+
+	if [[ "$1" == "nvme*" ]]; then
+		devLvm="/dev/${1}p2"
+	else
+		devLvm="/dev/${1}2"
+	fi
+
+	uuid=$(blkid "$devLvm" | cut -d '"' -f 2)
+	bootctl --path=/boot install &>/dev/null
+
+	# Write to /boot/loader/loader.conf.
+	echo "default arch" > /boot/loader/loader.conf
+	echo "timeout 3"   >> /boot/loader/loader.conf
+	echo "editor 0"    >> /boot/loader/loader.conf
+
+	# Write to /boot/loader/entries/arch.conf
+	echo "title Arch Linux"             > /boot/loader/entries/arch.conf
+	echo "linux /vmlinuz-linux"        >> /boot/loader/entries/arch.conf
+	echo "initrd /initramfs-linux.img" >> /boot/loader/entries/arch.conf
+	echo "options cryptdevice=UUID=\"${uuid}\":lvm root=/dev/mapper/vg0-root quiet rw" >> /boot/loader/entries/arch.conf
+	echo " done."
+
+	flag 2011
+}
+
 # Primary controller terminal. This is the left terminal. All flags originating
 # from this terminal are 1xxx.
 primary()
@@ -362,42 +403,65 @@ primary()
 	tmux send-keys -t 2 "$device" Enter
 
 	echo -e "\n\n Status"
-	check 2000 "   Enabling NTP        "
-	check 3000 "   Partitioning disk   "
-	check 3001 "   Formatting boot     "
+	check 2000 "   Enabling NTP           "
+	check 3000 "   Partitioning disk      "
+	check 3001 "   Formatting boot        "
 
 	# Send the encryption key to the tertiary.
 	sleep 1
 	tmux send-keys -t 2 "$encKey" Enter
 
-	check 3002 "   Formatting lvm      "
-	check 3003 "   Partitioning lvm    "
-	check 3004 "   Making swap         "
-	check 3005 "   Formatting root     "
-	check 3006 "   Formatting home     "
-	check 3007 "   Mounting partitions "
-	check 3008 "   Enabling swap       "
-	check 3009 "   Installing packages "
+	check 3002 "   Formatting lvm         "
+	check 3003 "   Partitioning lvm       "
+	check 3004 "   Making swap            "
+	check 3005 "   Formatting root        "
+	check 3006 "   Formatting home        "
+	check 3007 "   Mounting partitions    "
+	check 3008 "   Enabling swap          "
+	check 3009 "   Installing packages    "
 
 	# Signal to the secondary to continue.
 	flag 1000
 
-	check 2001 "   Generating fstab    "
+	check 2001 "   Generating fstab       "
 
 	sleep 1
 	tmux send-keys -t 1 "sh /root/rice-cooker.sh secondary_chroot" Enter
 
-	check_chroot 2002 "   Chrooting to /mnt   "
-	check_chroot 2003 "   Setting timezone    "
-	check_chroot 2004 "   Syncing hw clock    "
-	check_chroot 2005 "   Setting hostname    "
-	check_chroot 2006 "   Updating hosts      "
+	check_chroot 2002 "   Chrooting to /mnt      "
+	check_chroot 2003 "   Setting timezone       "
+	check_chroot 2004 "   Syncing hw clock       "
+	check_chroot 2005 "   Setting hostname       "
+	check_chroot 2006 "   Updating hosts         "
 
-	check_chroot 2050 "   Awaiting end signal "
+	check_chroot 2007 "   Generating locale      "
+	check_chroot 2008 "   Making init ramdisk    "
+
+	sleep 1
+	tmux send-keys -t 1 "$rootPass" Enter
+
+	check_chroot 2009 "   Setting root password  "
+
+	# Send the device to the chrooted secondary.
+	sleep 1
+	tmux send-keys -t 1 "$device" Enter
+
+	# Wait for the signal from the chrooted secondary to continue.
+	check_chroot_silent 2010
+
+	check_chroot 2011 "   Configuring bootloader "
+
 	sleep 1
 	tmux send-keys -t 1 "exit" Enter
 
-	check 2100 "   Exiting chroot      "
+	check 2100 "   Exiting chroot         "
+	check 2101 "   Unmounting /mnt        "
+
+	echo ""
+	echo " Installation complete. Rebooting now."
+
+	sleep 3
+	reboot
 }
 
 # Secondary quick-task terminal.
@@ -426,14 +490,20 @@ secondary()
 	# chroot.
 	echo " Chrooting to install... new shell will be spawned."
 	cp /root/rice-cooker.sh /mnt/root/rice-cooker.sh
-	arch-chroot /mnt  # Flags [2002,2006],2050
+	arch-chroot /mnt  # Flags [2002,2011],2050
 
 	# Signal that secondary has successfully exited chroot.
 	echo -e "\033[0;33m ==[ EXITING CHROOT ]== \033[0;0m"
 	flag 2100
+
+	# Unmount.
+	echo -n " Unmounting /mnt..."
+	umount -R /mnt
+	echo " done."
+	flag 2101
 }
 
-# Secondary quick-task terminal, within the chroot. Flags from [2002,2006],2050.
+# Secondary quick-task terminal, within the chroot. Flags from [2002,2011],2050.
 secondary_chroot()
 {
 	flag 2002
@@ -465,6 +535,37 @@ secondary_chroot()
 	echo "::1        $HOSTNAME.net  $HOSTNAME" >> /etc/hosts
 	echo " done."
 	flag 2006
+
+	# Generate locale.
+	echo -n " Generating locale..."
+	echo "$LOCALE" >> /etc/locale.gen
+	locale-gen &>/dev/null
+	flag 2007
+	echo " done."
+
+	# Update mkinitcpio hooks.
+	echo -n " Creating initial ramdisk..."
+	cat /etc/mkinitcpio.conf | sed -e "s/^HOOKS=.*/HOOKS=(base udev autodetect modconf block keyboard encrypt lvm2 filesystems fsck)/" > /tmp/buffer
+	mv /tmp/buffer /etc/mkinitcpio.conf
+	mkinitcpio -p linux &>/dev/null
+	echo " done."
+	stty -echo
+	flag 2008
+
+	# Set the root password.
+	read -r -p " Awaiting root password from controller..." rootPass
+	echo " [hidden]"
+	stty echo
+	echo -n " Setting root password..."
+	echo -ne "${rootPass}\n${rootPass}" | passwd &>/dev/null
+	echo " done."
+	flag 2009
+
+	# Get the device from the controller.
+	read -r -p " Awaiting device from controller... " device
+	flag 2010
+
+	configure_bootloader "$device"  # Flags 2011
 
 	# Flag controller to pull secondary out of chroot.
 	flag 2050
@@ -509,6 +610,7 @@ main()
 	echo -e " Rice cooker configuration:"
 	echo -e "   Locale"
 	echo -e "     Timezone \033[0;36m $TIMEZONE \033[0;0m"
+	echo -e "     Locale   \033[0;36m $LOCALE   \033[0;0m"
 	echo -e "   Disk"
 	echo -e "     Encrypt \033[0;36m $ENCRYPT \033[0;0m"
 	echo -e "     Partitions"
