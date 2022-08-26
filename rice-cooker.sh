@@ -403,44 +403,54 @@ primary()
 	tmux send-keys -t 2 "$device" Enter
 
 	echo -e "\n\n Status"
-	check 2000 "   Enabling NTP           "
-	check 3000 "   Partitioning disk      "
-	check 3001 "   Formatting boot        "
+	check 2000 "   Enabling NTP             "
+	check 3000 "   Partitioning disk        "
+	check 3001 "   Formatting boot          "
 
 	# Send the encryption key to the tertiary.
 	sleep 1
 	tmux send-keys -t 2 "$encKey" Enter
 
-	check 3002 "   Formatting lvm         "
-	check 3003 "   Partitioning lvm       "
-	check 3004 "   Making swap            "
-	check 3005 "   Formatting root        "
-	check 3006 "   Formatting home        "
-	check 3007 "   Mounting partitions    "
-	check 3008 "   Enabling swap          "
-	check 3009 "   Installing packages    "
+	check 3002 "   Formatting lvm           "
+	check 3003 "   Partitioning lvm         "
+	check 3004 "   Making swap              "
+	check 3005 "   Formatting root          "
+	check 3006 "   Formatting home          "
+	check 3007 "   Mounting partitions      "
+	check 3008 "   Enabling swap            "
+	check 3009 "   Installing packages      "
 
 	# Signal to the secondary to continue.
 	flag 1000
 
-	check 2001 "   Generating fstab       "
+	check 2001 "   Generating fstab         "
 
 	sleep 1
 	tmux send-keys -t 1 "sh /root/rice-cooker.sh secondary_chroot" Enter
+	flag 1001
+	sleep 1
+	tmux send-keys -t 2 "sh /root/rice-cooker.sh tertiary_chroot" Enter
 
-	check_chroot 2002 "   Chrooting to /mnt      "
-	check_chroot 2003 "   Setting timezone       "
-	check_chroot 2004 "   Syncing hw clock       "
-	check_chroot 2005 "   Setting hostname       "
-	check_chroot 2006 "   Updating hosts         "
+	check_chroot_silent 3010
+	check_chroot 2002 "   Chrooting to /mnt        "
 
-	check_chroot 2007 "   Generating locale      "
-	check_chroot 2008 "   Making init ramdisk    "
+	check_chroot_silent 3011
+	sleep 1
+	tmux send-keys -t 2 "$userPass" Enter
+	check_chroot_silent 3012
+
+	check_chroot 3013 "   Creating user account    "
+	check_chroot 2003 "   Setting timezone         "
+	check_chroot 2004 "   Syncing hw clock         "
+	check_chroot 2005 "   Setting hostname         "
+	check_chroot 2006 "   Updating hosts           "
+	check_chroot 2007 "   Generating locale        "
+	check_chroot 2008 "   Making initial ramdisk   "
 
 	sleep 1
 	tmux send-keys -t 1 "$rootPass" Enter
 
-	check_chroot 2009 "   Setting root password  "
+	check_chroot 2009 "   Setting root password    "
 
 	# Send the device to the chrooted secondary.
 	sleep 1
@@ -449,13 +459,22 @@ primary()
 	# Wait for the signal from the chrooted secondary to continue.
 	check_chroot_silent 2010
 
-	check_chroot 2011 "   Configuring bootloader "
+	check_chroot 2011 "   Configuring bootloader   "
+	check_chroot 3014 "   Installing user packages "
+	check_chroot 3015 "   Configuring X init WM/DE "
 
+	# Pull the tertiary out of chroot.
+	check_chroot_silent 3050
+	sleep 1
+	tmux send-keys -t 2 "exit" Enter
+
+	# Pull the secondary out of chroot.
+	check_chroot_silent 2050
 	sleep 1
 	tmux send-keys -t 1 "exit" Enter
 
-	check 2100 "   Exiting chroot         "
-	check 2101 "   Unmounting /mnt        "
+	check_silent 3100
+	check 2100 "   Exiting chroot           "
 
 	echo ""
 	echo " Installation complete. Rebooting now."
@@ -495,15 +514,9 @@ secondary()
 	# Signal that secondary has successfully exited chroot.
 	echo -e "\033[0;33m ==[ EXITING CHROOT ]== \033[0;0m"
 	flag 2100
-
-	# Unmount.
-	echo -n " Unmounting /mnt..."
-	umount -R /mnt
-	echo " done."
-	flag 2101
 }
 
-# Secondary quick-task terminal, within the chroot. Flags from [2002,2011],2050.
+# Secondary terminal, within the chroot. Flags from [2002,2011],2050.
 secondary_chroot()
 {
 	flag 2002
@@ -578,6 +591,72 @@ tertiary()
 
 	prepare_device              # Flags [3000,3008]
 	install_essential_packages  # Flags 3009
+
+	# chroot.
+	check_silent 1001
+	echo " Chrooting to install... new shell will be spawned."
+	chroot /mnt "/bin/bash"  # Flags [3010,XXX],3050
+
+	# Signal that secondary has successfully exited chroot.
+	echo -e "\033[0;33m ==[ EXITING CHROOT ]== \033[0;0m"
+	flag 3100
+}
+
+# Tertiary terminal, within the chroot. Flags [3010,XXX],3050.
+tertiary_chroot()
+{
+	flag 3010
+
+	echo -e "\033[0;33m ==[ NOW RUNNING CHROOTED ]== \033[0;0m"
+
+	# Get the password.
+	stty -echo
+	flag 3011
+	read -r -p " Awaiting user password from controller... " password
+	echo " [hidden]"
+	stty echo
+	flag 3012
+
+	# Create sudo user.
+	echo -n " Creating sudo user..."
+	useradd -m -G wheel "$USERNAME"
+	echo -ne "${password}\n${password}" | passwd "$USERNAME" &>/dev/null
+	cat /etc/sudoers | sed -e "s/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/" > /tmp/buffer
+	mv /tmp/buffer /etc/sudoers
+	echo " done."
+	flag 3013
+
+	# Install WM/DE, fonts, and X.
+	# TODO: replace this with user options.
+	echo -e " Installing user packages... this may take a while."
+	echo -e " \033[0;33m===[ PACKAGE INSTALLATION LOGS ]====\033[0;0m"
+	pacman -Sy --noconfirm i3-gaps ttf-dejavu xorg xorg-xinit xterm xf86-video-intel mesa
+	echo -e " \033[0;33m====================================\033[0;0m"
+	echo -e " Installing user packages... done."
+	flag 3014
+
+	# Configure X to start WM/DE.
+	# TODO: replace this with user options.
+	echo -n " Configuring X to automatically start WM/DE..."
+	echo "exec i3" > /home/$USERNAME/.xinitrc
+	echo " done."
+
+	# Configure Bash profile to automatically start X.
+	echo -n "Configuring shell to automatically start X..."
+	echo "#"                                         > /home/$USERNAME/.bash_profile
+	echo "# ~/.bash_profile"                        >> /home/$USERNAME/.bash_profile
+	echo "#"                                        >> /home/$USERNAME/.bash_profile
+	echo ""                                         >> /home/$USERNAME/.bash_profile
+	echo "[[ -f ~/.bashrc ]] && . ~/.bashrc"        >> /home/$USERNAME/.bash_profile
+	echo ""                                         >> /home/$USERNAME/.bash_profile
+	echo "if systemctl -q is-active graphical.target && [[ ! \$DISPLAY && \$XDG_VTNR -eq 1 ]]; then" >> /home/$USERNAME/.bash_profile
+	echo "	exec startx 1>/dev/null 2>&1"           >> /home/$USERNAME/.bash_profile
+	echo "fi"                                       >> /home/$USERNAME/.bash_profile
+	echo " done."
+	flag 3015
+
+	# Flag controller to pull secondary out of chroot.
+	flag 3050
 }
 
 main()
@@ -659,6 +738,8 @@ elif [[ "$arg0" == "secondary_chroot" ]]; then
 	secondary_chroot
 elif [[ "$arg0" == "tertiary" ]]; then
 	tertiary
+elif [[ "$arg0" == "tertiary_chroot" ]]; then
+	tertiary_chroot
 else
 	echo "Unknown input."
 fi
