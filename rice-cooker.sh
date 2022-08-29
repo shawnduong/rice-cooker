@@ -16,13 +16,17 @@ USERNAME="spicy"
 HOSTNAME="rice"
 # Defaults
 WMDE="i3-gaps"
+COMPOSITOR="picom"
 LAUNCHER="rofi"
 BAR="polybar"
 TERMINAL="st"
 EDITOR="vim"
+LOCKSCREEN="i3lock"
+WALLPAPER="feh"
 BROWSER="firefox"
 # Drivers
-DRIVERS="intel"
+DISPLAY="intel"
+WIFI="rtl88xxau-aircrack-dkms-git"
 # Dev Packs
 DEV_PACKS=("netsec" "forensics" "jekyll")
 
@@ -338,11 +342,62 @@ install_essential_packages()
 	# Install essential packages.
 	echo -e " Installing essential packages... this may take a while."
 	echo -e " \033[0;33m===[ PACKAGE INSTALLATION LOGS ]====\033[0;0m"
+
 	pacstrap /mnt base base-devel linux linux-firmware lvm2 networkmanager vim
+	status="$?"
+
 	echo -e " \033[0;33m====================================\033[0;0m"
 	echo -e " Installing essential packages... done."
 
-	flag 3009
+	if [[ "$status" == 0 ]]; then
+		flag 3009
+	else
+		echo -e "\033[0;31m There was an error during package installation. Please try again. \033[0;0m"
+	fi
+}
+
+# Install user packages. Flags 3014.
+# TODO: replace this with user options.
+install_user_packages()
+{
+	# Enable 5 parallel downloads at a time.
+	cat /etc/pacman.conf | sed -e "s/#ParallelDownloads = 5/ParallelDownloads = 5/" > /tmp/buffer
+	mv /tmp/buffer /etc/pacman.conf
+
+	echo -e " Installing user packages... this may take a while."
+	echo -e " \033[0;33m===[ PACKAGE INSTALLATION LOGS ]====\033[0;0m"
+
+	# WM/DE and display packages.
+	packages="i3-gaps ttf-dejavu xorg xorg-xinit xterm picom"
+
+	# Rice options.
+	packages="$packages rofi polybar vim i3lock feh firefox"
+
+	# Display drivers.
+	packages="$packages xf86-video-intel mesa"
+
+	# Terminal.
+	# TODO
+
+	# Other.
+	packages="$packages git"
+
+	# Install packages.
+	pacman -Sy --noconfirm $packages
+
+	# Install yay.
+	su "$USERNAME" -c "cd /tmp && git clone https://aur.archlinux.org/yay-bin.git && cd yay-bin/ && makepkg -si --noconfirm"
+	su "$USERNAME" -c "yay -Syu --devel && yay -Y --devel --save"
+
+	# Wi-Fi drivers.
+	aurPackages="rtl88xxau-aircrack-dkms-git"
+
+	su "$USERNAME" -c "yay -Sy --noconfirm $aurPackages"
+
+	echo -e " \033[0;33m====================================\033[0;0m"
+	echo -e " Installing user packages... done."
+
+	flag 3014
 }
 
 # Configure the bootloader. Flags 2011.
@@ -479,6 +534,8 @@ primary()
 	echo ""
 	echo " Installation complete. Rebooting now."
 
+	check 9999
+
 	sleep 3
 	reboot
 }
@@ -595,14 +652,14 @@ tertiary()
 	# chroot.
 	check_silent 1001
 	echo " Chrooting to install... new shell will be spawned."
-	chroot /mnt "/bin/bash"  # Flags [3010,XXX],3050
+	chroot /mnt "/bin/bash"  # Flags [3010,3015],3050
 
 	# Signal that secondary has successfully exited chroot.
 	echo -e "\033[0;33m ==[ EXITING CHROOT ]== \033[0;0m"
 	flag 3100
 }
 
-# Tertiary terminal, within the chroot. Flags [3010,XXX],3050.
+# Tertiary terminal, within the chroot. Flags [3010,3015],3050.
 tertiary_chroot()
 {
 	flag 3010
@@ -612,7 +669,7 @@ tertiary_chroot()
 	# Get the password.
 	stty -echo
 	flag 3011
-	read -r -p " Awaiting user password from controller... " password
+	read -r -p " Awaiting user password from controller..." password
 	echo " [hidden]"
 	stty echo
 	flag 3012
@@ -621,22 +678,19 @@ tertiary_chroot()
 	echo -n " Creating sudo user..."
 	useradd -m -G wheel "$USERNAME"
 	echo -ne "${password}\n${password}" | passwd "$USERNAME" &>/dev/null
-	cat /etc/sudoers | sed -e "s/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/" > /tmp/buffer
+	cat /etc/sudoers | sed -e "s/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/" > /tmp/buffer
 	mv /tmp/buffer /etc/sudoers
 	echo " done."
 	flag 3013
 
 	# Install WM/DE, fonts, and X.
-	# TODO: replace this with user options.
-	echo -e " Installing user packages... this may take a while."
-	echo -e " \033[0;33m===[ PACKAGE INSTALLATION LOGS ]====\033[0;0m"
-	pacman -Sy --noconfirm i3-gaps ttf-dejavu xorg xorg-xinit xterm xf86-video-intel mesa
-	echo -e " \033[0;33m====================================\033[0;0m"
-	echo -e " Installing user packages... done."
-	flag 3014
+	install_user_packages
+	cat /etc/sudoers | sed -e "s/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/" > /tmp/buffer
+	mv /tmp/buffer /etc/sudoers
+	cat /etc/sudoers | sed -e "s/# %wheel ALL=(ALL:ALL) ALL/# %wheel ALL=(ALL:ALL) ALL/" > /tmp/buffer
+	mv /tmp/buffer /etc/sudoers
 
 	# Configure X to start WM/DE.
-	# TODO: replace this with user options.
 	echo -n " Configuring X to automatically start WM/DE..."
 	echo "exec i3" > /home/$USERNAME/.xinitrc
 	echo " done."
@@ -649,7 +703,8 @@ tertiary_chroot()
 	echo ""                                         >> /home/$USERNAME/.bash_profile
 	echo "[[ -f ~/.bashrc ]] && . ~/.bashrc"        >> /home/$USERNAME/.bash_profile
 	echo ""                                         >> /home/$USERNAME/.bash_profile
-	echo "if systemctl -q is-active graphical.target && [[ ! \$DISPLAY && \$XDG_VTNR -eq 1 ]]; then" >> /home/$USERNAME/.bash_profile
+	echo "if systemctl -q is-active graphical.target && [[ ! \$DISPLAY && \$XDG_VTNR -eq 1 ]]; then" \
+	                                                >> /home/$USERNAME/.bash_profile
 	echo "	exec startx 1>/dev/null 2>&1"           >> /home/$USERNAME/.bash_profile
 	echo "fi"                                       >> /home/$USERNAME/.bash_profile
 	echo " done."
@@ -701,14 +756,18 @@ main()
 	echo -e "     Username \033[0;36m $USERNAME \033[0;0m"
 	echo -e "     Hostname \033[0;36m $HOSTNAME \033[0;0m"
 	echo -e "   Defaults"
-	echo -e "     WM/DE    \033[0;36m $WMDE     \033[0;0m"
-	echo -e "     Launcher \033[0;36m $LAUNCHER \033[0;0m"
-	echo -e "     Bar      \033[0;36m $BAR      \033[0;0m"
-	echo -e "     Terminal \033[0;36m $TERMINAL \033[0;0m"
-	echo -e "     Editor   \033[0;36m $EDITOR   \033[0;0m"
-	echo -e "     Browser  \033[0;36m $BROWSER  \033[0;0m"
+	echo -e "     WM/DE      \033[0;36m $WMDE       \033[0;0m"
+	echo -e "     Compositor \033[0;36m $COMPOSITOR \033[0;0m"
+	echo -e "     Launcher   \033[0;36m $LAUNCHER   \033[0;0m"
+	echo -e "     Bar        \033[0;36m $BAR        \033[0;0m"
+	echo -e "     Terminal   \033[0;36m $TERMINAL   \033[0;0m"
+	echo -e "     Editor     \033[0;36m $EDITOR     \033[0;0m"
+	echo -e "     Lockscreen \033[0;36m $LOCKSCREEN \033[0;0m"
+	echo -e "     Wallpaper  \033[0;36m $WALLPAPER  \033[0;0m"
+	echo -e "     Browser    \033[0;36m $BROWSER    \033[0;0m"
 	echo -e "   Drivers"
-	echo -e "     Display \033[0;36m $DRIVERS \033[0;0m"
+	echo -e "     Display \033[0;36m $DISPLAY \033[0;0m"
+	echo -e "     Wi-Fi   \033[0;36m $WIFI    \033[0;0m"
 	echo -e "   Dev Packs"
 	echo -n "     "
 	for (( i=0; i < ${#DEV_PACKS[@]}-1; i++ )); do
