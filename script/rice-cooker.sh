@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# CLI arguments.
+arg0="$1"
+
 # Rice cooker configuration:
 # Locale
 TIMEZONE="US/Pacific"
@@ -29,9 +32,6 @@ DISPLAY="intel"
 WIFI="rtl88xxau-aircrack-dkms-git"
 # Dev Packs
 DEV_PACKS=("netsec" "forensics" "jekyll")
-
-# CLI arguments.
-arg0="$1"
 
 # Print the banner.
 print_banner()
