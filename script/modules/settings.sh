@@ -12,6 +12,7 @@ SIZE_HOME="remainder"
 # System
 USERNAME="spicy"
 HOSTNAME="rice"
+DIRECTORIES="minimal"
 # Defaults
 WMDE="i3-gaps"
 COMPOSITOR="picom"

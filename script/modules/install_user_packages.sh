@@ -9,20 +9,50 @@ install_user_packages()
 	echo -e " Installing user packages... this may take a while."
 	echo -e " \033[0;33m===[ PACKAGE INSTALLATION LOGS ]====\033[0;0m"
 
-	# WM/DE and display packages.
-	packages="i3-gaps ttf-dejavu xorg xorg-xinit xterm picom"
+	# Fallback terminal.
+	packages="xterm"
+
+	# WM/DE
+	case $WMDE in
+		"i3-gaps")
+			packages+=" i3-gaps"
+			;;
+		"i3")
+			packages+=" i3"
+			;;
+	esac
+
+	# Compositor.
+	packages+=" $COMPOSITOR"
+
+	# Default fonts.
+	packages+=" ttf-dejavu"
+
+	# Display packages.
+	packages+=" xorg xorg-xinit"
 
 	# Rice options.
-	packages="$packages rofi polybar vim i3lock feh firefox"
+	packages+=" $LAUNCHER $BAR $EDITOR $LOCKSCREEN $WALLPAPER $BROWSER"
 
 	# Display drivers.
-	packages="$packages xf86-video-intel mesa"
+	case $DISPLAY in
+		"intel")
+			packages+=" xf86-video-intel mesa"
+			;;
+	esac
 
 	# Terminal.
-	# TODO
+	case $TERMINAL in
+		"st")
+#			install_st  # TODO
+			;;
+		*)
+			packages+=" $TERMINAL"
+			;;
+	esac
 
 	# Other.
-	packages="$packages git"
+	packages+=" git"
 
 	# Install packages.
 	pacman -Sy --noconfirm $packages
@@ -31,8 +61,14 @@ install_user_packages()
 	su "$USERNAME" -c "cd /tmp && git clone https://aur.archlinux.org/yay-bin.git && cd yay-bin/ && makepkg -si --noconfirm"
 	su "$USERNAME" -c "yay -Syu --devel && yay -Y --devel --save"
 
+	aurPackages=""
+
 	# Wi-Fi drivers.
-	aurPackages="rtl88xxau-aircrack-dkms-git"
+	case $WIFI in
+		"rtl88xxau-aircrack-dkms-git")
+			aurPackages+=" rtl88xxau-aircrack-dkms-git"
+			;;
+	esac
 
 	su "$USERNAME" -c "yay -Sy --noconfirm $aurPackages"
 
