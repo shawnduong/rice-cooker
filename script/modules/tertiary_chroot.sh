@@ -73,6 +73,12 @@ tertiary_chroot()
 	echo " done."
 	flag 3016
 
+	# Enable NetworkManager.
+	echo -n " Enabling NetworkManager..."
+	systemctl enable NetworkManager &>/dev/null
+	echo " done."
+	flag 3017
+
 	# Flag controller to pull secondary out of chroot.
 	flag 3050
 }

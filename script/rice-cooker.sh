@@ -558,6 +558,7 @@ primary()
 	check_chroot 3014 "   Installing user packages "
 	check_chroot 3015 "   Configuring X init WM/DE "
 	check_chroot 3016 "   Creating user home dirs  "
+	check_chroot 3017 "   Enabling NetworkManager  "
 
 	# Pull the tertiary out of chroot.
 	check_chroot_silent 3050
@@ -774,6 +775,12 @@ tertiary_chroot()
 	esac
 	echo " done."
 	flag 3016
+
+	# Enable NetworkManager.
+	echo -n " Enabling NetworkManager..."
+	systemctl enable NetworkManager &>/dev/null
+	echo " done."
+	flag 3017
 
 	# Flag controller to pull secondary out of chroot.
 	flag 3050
