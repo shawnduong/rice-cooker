@@ -85,6 +85,7 @@ primary()
 	check_chroot 2011 "   Configuring bootloader   "
 	check_chroot 3014 "   Installing user packages "
 	check_chroot 3015 "   Configuring X init WM/DE "
+	check_chroot 3016 "   Creating user home dirs  "
 
 	# Pull the tertiary out of chroot.
 	check_chroot_silent 3050

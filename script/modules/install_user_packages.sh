@@ -12,6 +12,9 @@ install_user_packages()
 	# Fallback terminal.
 	packages="xterm"
 
+	# xdg-user-dirs creates and handles user home directories.
+	packages+=" xdg-user-dirs"
+
 	# WM/DE
 	case $WMDE in
 		"i3-gaps")

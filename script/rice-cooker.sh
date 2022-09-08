@@ -17,6 +17,7 @@ SIZE_HOME="remainder"
 # System
 USERNAME="spicy"
 HOSTNAME="rice"
+DIRECTORIES="minimal"
 # Defaults
 WMDE="i3-gaps"
 COMPOSITOR="picom"
@@ -367,20 +368,53 @@ install_user_packages()
 	echo -e " Installing user packages... this may take a while."
 	echo -e " \033[0;33m===[ PACKAGE INSTALLATION LOGS ]====\033[0;0m"
 
-	# WM/DE and display packages.
-	packages="i3-gaps ttf-dejavu xorg xorg-xinit xterm picom"
+	# Fallback terminal.
+	packages="xterm"
+
+	# xdg-user-dirs creates and handles user home directories.
+	packages+=" xdg-user-dirs"
+
+	# WM/DE
+	case $WMDE in
+		"i3-gaps")
+			packages+=" i3-gaps"
+			;;
+		"i3")
+			packages+=" i3"
+			;;
+	esac
+
+	# Compositor.
+	packages+=" $COMPOSITOR"
+
+	# Default fonts.
+	packages+=" ttf-dejavu"
+
+	# Display packages.
+	packages+=" xorg xorg-xinit"
 
 	# Rice options.
-	packages="$packages rofi polybar vim i3lock feh firefox"
+	packages+=" $LAUNCHER $BAR $EDITOR $LOCKSCREEN $WALLPAPER $BROWSER"
 
 	# Display drivers.
-	packages="$packages xf86-video-intel mesa"
+	case $DISPLAY in
+		"intel")
+			packages+=" xf86-video-intel mesa"
+			;;
+	esac
 
 	# Terminal.
-	# TODO
+	case $TERMINAL in
+		"st")
+#			install_st  # TODO
+			;;
+		*)
+			packages+=" $TERMINAL"
+			;;
+	esac
 
 	# Other.
-	packages="$packages git"
+	packages+=" git"
 
 	# Install packages.
 	pacman -Sy --noconfirm $packages
@@ -389,8 +423,14 @@ install_user_packages()
 	su "$USERNAME" -c "cd /tmp && git clone https://aur.archlinux.org/yay-bin.git && cd yay-bin/ && makepkg -si --noconfirm"
 	su "$USERNAME" -c "yay -Syu --devel && yay -Y --devel --save"
 
+	aurPackages=""
+
 	# Wi-Fi drivers.
-	aurPackages="rtl88xxau-aircrack-dkms-git"
+	case $WIFI in
+		"rtl88xxau-aircrack-dkms-git")
+			aurPackages+=" rtl88xxau-aircrack-dkms-git"
+			;;
+	esac
 
 	su "$USERNAME" -c "yay -Sy --noconfirm $aurPackages"
 
@@ -517,6 +557,7 @@ primary()
 	check_chroot 2011 "   Configuring bootloader   "
 	check_chroot 3014 "   Installing user packages "
 	check_chroot 3015 "   Configuring X init WM/DE "
+	check_chroot 3016 "   Creating user home dirs  "
 
 	# Pull the tertiary out of chroot.
 	check_chroot_silent 3050
@@ -684,7 +725,7 @@ tertiary_chroot()
 	flag 3013
 
 	# Install WM/DE, fonts, and X.
-	install_user_packages
+	install_user_packages  # Flags 3014
 	cat /etc/sudoers | sed -e "s/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/" > /tmp/buffer
 	mv /tmp/buffer /etc/sudoers
 	cat /etc/sudoers | sed -e "s/# %wheel ALL=(ALL:ALL) ALL/# %wheel ALL=(ALL:ALL) ALL/" > /tmp/buffer
@@ -696,7 +737,7 @@ tertiary_chroot()
 	echo " done."
 
 	# Configure Bash profile to automatically start X.
-	echo -n "Configuring shell to automatically start X..."
+	echo -n " Configuring shell to automatically start X..."
 	echo "#"                                         > /home/$USERNAME/.bash_profile
 	echo "# ~/.bash_profile"                        >> /home/$USERNAME/.bash_profile
 	echo "#"                                        >> /home/$USERNAME/.bash_profile
@@ -709,6 +750,30 @@ tertiary_chroot()
 	echo "fi"                                       >> /home/$USERNAME/.bash_profile
 	echo " done."
 	flag 3015
+
+	# Create user home dirs.
+	echo -n " Creating user home directories..."
+	case $DIRECTORIES in
+		"minimal")
+			su "$USERNAME" -c "mkdir ~/doc/ ~/dl/ ~/mus/ ~/pic/ ~/doc/public/ ~/doc/templates/ ~/vid/"
+			su "$USERNAME" -c "xdg-user-dirs-update --set DESKTOP ~/"
+			su "$USERNAME" -c "xdg-user-dirs-update --set DOCUMENTS ~/doc/"
+			su "$USERNAME" -c "xdg-user-dirs-update --set DOWNLOAD ~/dl/"
+			su "$USERNAME" -c "xdg-user-dirs-update --set MUSIC ~/mus/"
+			su "$USERNAME" -c "xdg-user-dirs-update --set PICTURES ~/pic/"
+			su "$USERNAME" -c "xdg-user-dirs-update --set PUBLICSHARE ~/doc/public/"
+			su "$USERNAME" -c "xdg-user-dirs-update --set TEMPLATES ~/doc/templates/"
+			su "$USERNAME" -c "xdg-user-dirs-update --set VIDEOS ~/vid/"
+			su "$USERNAME" -c "xdg-user-dirs-update"
+			;;
+		"full")
+			su "$USERNAME" -c "xdg-user-dirs-update"
+			;;
+		"none")
+			;;
+	esac
+	echo " done."
+	flag 3016
 
 	# Flag controller to pull secondary out of chroot.
 	flag 3050
@@ -753,8 +818,9 @@ main()
 	echo -e "     ├─root \033[0;36m $SIZE_ROOT \033[0;0m"
 	echo -e "     └─home \033[0;36m $SIZE_HOME \033[0;0m"
 	echo -e "   System"
-	echo -e "     Username \033[0;36m $USERNAME \033[0;0m"
-	echo -e "     Hostname \033[0;36m $HOSTNAME \033[0;0m"
+	echo -e "     Username    \033[0;36m $USERNAME    \033[0;0m"
+	echo -e "     Hostname    \033[0;36m $HOSTNAME    \033[0;0m"
+	echo -e "     Directories \033[0;36m $DIRECTORIES \033[0;0m"
 	echo -e "   Defaults"
 	echo -e "     WM/DE      \033[0;36m $WMDE       \033[0;0m"
 	echo -e "     Compositor \033[0;36m $COMPOSITOR \033[0;0m"
