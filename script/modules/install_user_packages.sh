@@ -12,6 +12,9 @@ install_user_packages()
 	# Fallback terminal.
 	packages="xterm"
 
+	# Policy kit.
+	package+=" polkit"
+
 	# xdg-user-dirs creates and handles user home directories.
 	packages+=" xdg-user-dirs"
 
