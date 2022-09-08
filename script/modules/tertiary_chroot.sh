@@ -26,7 +26,7 @@ tertiary_chroot()
 	install_user_packages  # Flags 3014
 	cat /etc/sudoers | sed -e "s/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/" > /tmp/buffer
 	mv /tmp/buffer /etc/sudoers
-	cat /etc/sudoers | sed -e "s/# %wheel ALL=(ALL:ALL) ALL/# %wheel ALL=(ALL:ALL) ALL/" > /tmp/buffer
+	cat /etc/sudoers | sed -e "s/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/" > /tmp/buffer
 	mv /tmp/buffer /etc/sudoers
 
 	# Configure X to start WM/DE.
