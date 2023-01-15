@@ -3,15 +3,65 @@
 
 <head>
 	<title>Rice Cooker</title>
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/style.css">
 </head>
 
 <body>
 
-	<script src="assets/js/main.js" defer></script>
+	<script src="/assets/js/jquery-3.6.3.min.js" defer></script>
+	<script src="/assets/js/main.js" defer></script>
 
-	<h1>Rice Cooker</h1>
-	<p>This project is in early development and the front-end looks atrocious.</p>
+	<center>
+		<h1>Rice Cooker</h1>
+		<p><i>Quickly and effortlessly generate complete custom Arch Linux installation scripts.</i></p>
+		<p>Check the project out on <a href="https://github.com/shawnduong/rice-cooker" target="_blank">GitHub</a>!</p>
+	</center>
+
+	<button>Import Saved Configuration</button>
+
+	<h2>Personal</h2>
+
+	<label for="s_username">Username</label>
+	<input type="text" id="s_username" name="s_username"></input>
+	<br><br>
+
+	<label for="s_hostname">Hostname</label>
+	<input type="text" id="s_hostname" name="s_hostname"></input>
+	<br><br>
+
+	<label for="s_home_style">Home Style</label>
+	<br>
+	<input type="radio" id="s_home_style_full" name="s_home_style" value="full">
+	<label for="s_home_style_full">Full</label>
+	<br>
+	<input type="radio" id="s_home_style_minimal" name="s_home_style" value="minimal">
+	<label for="s_home_style_minimal">Minimal</label>
+	<br>
+	<input type="radio" id="s_home_style_none" name="s_home_style" value="none">
+	<label for="s_home_style_none">None</label>
+
+	<h2>Locality</h2>
+
+	<label for="s_timezone">Timezone</label>
+	<select name="s_timzeone" id="s_timezone">
+	</select>
+	<br><br>
+
+	<label for="s_locale">Locale</label>
+	<select name="s_locale" id="s_locale">
+	</select>
+
+	<h2>Disk</h2>
+
+	<h2>Drivers</h2>
+
+	<h2>Rice</h2>
+
+	<h2>Additional Packs</h2>
+
+	<h2>Finish</h2>
+
+	<button>Cook!</button>
 
 </body>
 
