@@ -61,9 +61,14 @@ $("#preset_partitions_recommended").click(function()
 	$("#s_size_root").attr("disabled", true);
 	$("#home_remainder").attr("disabled", true);
 	$("#s_size_home").attr("disabled", true);
+
+	$("#home_remainder").prop("checked", true);
+	homePartitionSizeBuffer = $("#s_size_home").val();
+	$("#s_size_home").val("").change();
 });
 $("#preset_partitions_custom").click(function()
 {
+	$("#preset_disk_size").val("").change();
 	$("#preset_disk_size").attr("disabled", true);
 	$("#s_size_boot").attr("disabled", false);
 	$("#s_size_swap").attr("disabled", false);
@@ -88,3 +93,45 @@ $("#home_remainder").click(function()
 		$("#s_size_home").attr("disabled", false);
 	}
 });
+$("#preset_disk_size").on("input", function()
+{
+	let value = $(this).val();
+	if (value < 16)
+	{
+		$("#s_size_boot").val("").change();
+		$("#s_size_swap").val("").change();
+		$("#s_size_root").val("").change();
+	}
+	else if (value < 32)
+	{
+		$("#s_size_boot").val("512").change();
+		$("#s_size_swap").val("1").change();
+		$("#s_size_root").val("8").change();
+	}
+	else if (value < 64)
+	{
+		$("#s_size_boot").val("512").change();
+		$("#s_size_swap").val("1").change();
+		$("#s_size_root").val("16").change();
+	}
+	else if (value < 128)
+	{
+		$("#s_size_boot").val("512").change();
+		$("#s_size_swap").val("1").change();
+		$("#s_size_root").val("32").change();
+	}
+	else
+	{
+		$("#s_size_boot").val("512").change();
+		$("#s_size_swap").val("1").change();
+		$("#s_size_root").val("64").change();
+	}
+});
+
+/* Validate numerical input. */
+function val_num(e)
+{
+	if (e.key >= "0" && e.key <= "9")
+		return true;
+	return true; 
+}

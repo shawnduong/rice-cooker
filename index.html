@@ -108,29 +108,29 @@
 	<div id="disk-recommended">
 		<label for="preset_disk_size">Approximate Disk Size</label>
 		<br>
-		<input type="number" id="preset_disk_size" name="preset_disk_size" disabled><i> GiB</i>
+		<input type="number" min="0" id="preset_disk_size" name="preset_disk_size" onkeypress="return val_num(event)" disabled><i> GiB</i>
 		<br><br>
 	</div>
 
 	<div id="disk-custom">
 		<label for="s_size_boot">Boot Partition Size</label>
 		<br>
-		<input type="number" id="s_size_boot" name="s_size_boot" disabled><i> MiB</i>
+		<input type="number" min="0" id="s_size_boot" name="s_size_boot" onkeypress="return val_num(event)" disabled><i> MiB</i>
 		<br><br>
 		<label for="s_size_swap">Swap Partition Size</label>
 		<br>
-		<input type="number" id="s_size_swap" name="s_size_swap" disabled><i> GiB</i>
+		<input type="number" min="0" id="s_size_swap" name="s_size_swap" onkeypress="return val_num(event)" disabled><i> GiB</i>
 		<br><br>
 		<label for="s_size_root">Root Partition Size</label>
 		<br>
-		<input type="number" id="s_size_root" name="s_size_root" disabled><i> GiB</i>
+		<input type="number" min="0" id="s_size_root" name="s_size_root" onkeypress="return val_num(event)" disabled><i> GiB</i>
 		<br><br>
 		<label for="s_size_home">Home Partition Size</label>
 		<br>
 		<input type="checkbox" id="home_remainder" value="remainder" disabled>
 		<label for="home_remainder">Remainder</label>
 		<br>
-		<input type="number" id="s_size_home" name="s_size_home" disabled><i> GiB</i>
+		<input type="number" min="0" id="s_size_home" name="s_size_home" onkeypress="return val_num(event)" disabled><i> GiB</i>
 		<br><br>
 	</div>
 
