@@ -128,6 +128,26 @@ $("#preset_disk_size").on("input", function()
 	}
 });
 
+/* Handle driver type option based on display selection. */
+$("#s_display_intel").click(function()
+{
+	$("#s_driver_open").attr("disabled", false);
+	$("#s_driver_proprietary").attr("disabled", true);
+	$("#s_driver_open").prop("checked", true);
+});
+$("#s_display_amd").click(function()
+{
+	$("#s_driver_open").attr("disabled", false);
+	$("#s_driver_proprietary").attr("disabled", false);
+	$("#s_driver_open").prop("checked", true);
+});
+$("#s_display_nvidia").click(function()
+{
+	$("#s_driver_open").attr("disabled", false);
+	$("#s_driver_proprietary").attr("disabled", false);
+	$("#s_driver_open").prop("checked", true);
+});
+
 /* Validate numerical input. */
 function val_num(e)
 {
