@@ -17,6 +17,11 @@
 	<meta property="og:description" content="Quickly and effortlessly generate complete custom Arch Linux installation scripts.">
 	<meta property="og:image" content="https://rice.shawnd.xyz/assets/logo/logo.png">
 
+	<!-- Google Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
+
 	<!-- Twitter -->
 	<meta property="twitter:card" content="summary_large_image">
 	<meta property="twitter:url" content="https://rice.shawnd.xyz/">
@@ -35,180 +40,185 @@
 	<script src="/assets/js/events.js" defer></script>
 	<script src="/assets/js/functions.js" defer></script>
 
-	<center>
+	<div class="about">
+
 		<h1>Rice Cooker</h1>
 		<img src="/assets/logo/logo.png" width="25%"/>
 		<p><i>Quickly and effortlessly generate complete custom Arch Linux installation scripts.</i></p>
 		<p>Check the project out on <a href="https://github.com/shawnduong/rice-cooker" target="_blank">GitHub</a>!</p>
-	</center>
-
-	<button>Import Saved Configuration</button>
-
-	<div id="personal">
-
-		<h2>Personal</h2>
-
-		<label for="s_username"><span class="label">Username </span><a class="help">(?)</a></label>
-		<br>
-		<input type="text" id="s_username" name="s_username"></input>
-		<br><br>
-
-		<label for="s_hostname"><span class="label">Hostname </span><a class="help">(?)</a></label>
-		<br>
-		<input type="text" id="s_hostname" name="s_hostname"></input>
-		<br><br>
-
-		<label for="s_home_style"><span class="label">Home Style </span><a class="help">(?)</a></label>
-		<br>
-		<input type="radio" id="s_home_style_full" name="s_home_style" value="full">
-		<label for="s_home_style_full">Full</label>
-		<br>
-		<input type="radio" id="s_home_style_minimal" name="s_home_style" value="minimal">
-		<label for="s_home_style_minimal">Minimal</label>
-		<br>
-		<input type="radio" id="s_home_style_none" name="s_home_style" value="none">
-		<label for="s_home_style_none">None</label>
-
+		<button>Import Saved Configuration</button>
+		
 	</div>
 
-	<div id="locality">
+	<div class="main-body">
+		
+		<div id="personal">
 
-		<h2>Locality</h2>
+			<h2>Personal</h2>
 
-		<label for="preset_locality">Presets</label>
-		<br>
-		<select name="preset_locality" id="preset_locality">
-			<option selected disabled hidden style="display: none" value=""></option>
-		</select>
-		<br><br>
-
-		<div id="locality-toggle" class="disabled">
-
-			<label for="s_timezone">Timezone</label>
+			<label for="s_username"><span class="label">Username </span><a class="help">(?)</a></label>
 			<br>
-			<select name="s_timezone" id="s_timezone" disabled>
+			<input type="text" id="s_username" name="s_username"></input>
+			<br><br>
+
+			<label for="s_hostname"><span class="label">Hostname </span><a class="help">(?)</a></label>
+			<br>
+			<input type="text" id="s_hostname" name="s_hostname"></input>
+			<br><br>
+
+			<label for="s_home_style"><span class="label">Home Style </span><a class="help">(?)</a></label>
+			<br>
+			<input type="radio" id="s_home_style_full" name="s_home_style" value="full">
+			<label for="s_home_style_full">Full</label>
+			<br>
+			<input type="radio" id="s_home_style_minimal" name="s_home_style" value="minimal">
+			<label for="s_home_style_minimal">Minimal</label>
+			<br>
+			<input type="radio" id="s_home_style_none" name="s_home_style" value="none">
+			<label for="s_home_style_none">None</label>
+
+		</div>
+
+		<div id="locality">
+
+			<h2>Locality</h2>
+
+			<label for="preset_locality">Presets</label>
+			<br>
+			<select name="preset_locality" id="preset_locality">
 				<option selected disabled hidden style="display: none" value=""></option>
 			</select>
 			<br><br>
 
-			<label for="s_locale">Locale</label>
-			<br>
-			<select name="s_locale" id="s_locale" disabled>
-				<option selected disabled hidden style="display: none" value=""></option>
-			</select>
+			<div id="locality-toggle" class="disabled">
+
+				<label for="s_timezone">Timezone</label>
+				<br>
+				<select name="s_timezone" id="s_timezone" disabled>
+					<option selected disabled hidden style="display: none" value=""></option>
+				</select>
+				<br><br>
+
+				<label for="s_locale">Locale</label>
+				<br>
+				<select name="s_locale" id="s_locale" disabled>
+					<option selected disabled hidden style="display: none" value=""></option>
+				</select>
+
+			</div>
 
 		</div>
 
-	</div>
+		<div id="disk">
 
-	<div id="disk">
+			<h2>Disk</h2>
 
-		<h2>Disk</h2>
-
-		<label for="s_encrypt"><span class="label">Security </span><a class="help">(?)</a></label>
-		<br>
-		<input type="checkbox" id="s_encrypt" name="s_encrypt" value="encrypt">
-		<label for="s_encrypt">Enable encryption</label>
-		<br><br>
-
-		<label for="preset_partitions"><span class="label">Partition Sizes </span><a class="help">(?)</a></label>
-		<br>
-		<input type="radio" id="preset_partitions_recommended" name="preset_partitions" value="recommended">
-		<label for="preset_partitions_recommended">Recommended</label>
-		<br>
-		<input type="radio" id="preset_partitions_custom" name="preset_partitions" value="custom">
-		<label for="preset_partitions_custom">Custom</label>
-		<br><br>
-
-		<div id="disk-toggle-1" class="disabled">
-
-			<label for="preset_disk_size">Approximate Disk Size</label>
+			<label for="s_encrypt"><span class="label">Security </span><a class="help">(?)</a></label>
 			<br>
-			<input type="number" min="0" id="preset_disk_size" name="preset_disk_size" onkeypress="return val_num(event)" disabled><i> GiB</i>
+			<input type="checkbox" id="s_encrypt" name="s_encrypt" value="encrypt">
+			<label for="s_encrypt">Enable encryption</label>
 			<br><br>
+
+			<label for="preset_partitions"><span class="label">Partition Sizes </span><a class="help">(?)</a></label>
+			<br>
+			<input type="radio" id="preset_partitions_recommended" name="preset_partitions" value="recommended">
+			<label for="preset_partitions_recommended">Recommended</label>
+			<br>
+			<input type="radio" id="preset_partitions_custom" name="preset_partitions" value="custom">
+			<label for="preset_partitions_custom">Custom</label>
+			<br><br>
+
+			<div id="disk-toggle-1" class="disabled">
+
+				<label for="preset_disk_size">Approximate Disk Size</label>
+				<br>
+				<input type="number" min="0" id="preset_disk_size" name="preset_disk_size" onkeypress="return val_num(event)" disabled><i> GiB</i>
+				<br><br>
+
+			</div>
+
+			<div id="disk-toggle-2" class="disabled">
+
+				<label for="s_size_boot">Boot Partition Size</label>
+				<br>
+				<input type="number" min="0" id="s_size_boot" name="s_size_boot" onkeypress="return val_num(event)" disabled><i> MiB</i>
+				<br><br>
+				<label for="s_size_swap">Swap Partition Size</label>
+				<br>
+				<input type="number" min="0" id="s_size_swap" name="s_size_swap" onkeypress="return val_num(event)" disabled><i> GiB</i>
+				<br><br>
+				<label for="s_size_root">Root Partition Size</label>
+				<br>
+				<input type="number" min="0" id="s_size_root" name="s_size_root" onkeypress="return val_num(event)" disabled><i> GiB</i>
+				<br><br>
+				<label for="s_size_home">Home Partition Size</label>
+				<br>
+				<input type="checkbox" id="home_remainder" value="remainder" disabled>
+				<label for="home_remainder">Remainder</label>
+				<br>
+				<input type="number" min="0" id="s_size_home" name="s_size_home" onkeypress="return val_num(event)" disabled><i> GiB</i>
+				<br><br>
+
+			</div>
 
 		</div>
 
-		<div id="disk-toggle-2" class="disabled">
+		<div id="drivers">
 
-			<label for="s_size_boot">Boot Partition Size</label>
+			<h2>Drivers</h2>
+
+			<label for="s_display"><span class="label">Display Type </span><a class="help">(?)</a></label>
 			<br>
-			<input type="number" min="0" id="s_size_boot" name="s_size_boot" onkeypress="return val_num(event)" disabled><i> MiB</i>
+			<input type="radio" id="s_display_intel" name="s_display" value="intel">
+			<label for="s_display_intel">Intel</label>
+			<br>
+			<input type="radio" id="s_display_amd" name="s_display" value="amd">
+			<label for="s_display_amd">AMD</label>
+			<br>
+			<input type="radio" id="s_display_nvidia" name="s_display" value="nvidia">
+			<label for="s_display_nvidia">Nvidia</label>
+			<br>
+			<input type="radio" id="s_display_none" name="s_display" value="none">
+			<label for="s_display_none">None</label>
+			<br>
 			<br><br>
-			<label for="s_size_swap">Swap Partition Size</label>
+
+			<div id="drivers-toggle" class="disabled">
+
+				<label for="s_driver"><span class="label">Display Driver Type </span><a class="help">(?)</a></label>
+				<br>
+				<input type="radio" id="s_driver_open" name="s_driver" value="open" disabled>
+				<label for="s_driver_open">Open</label>
+				<br>
+				<input type="radio" id="s_driver_proprietary" name="s_driver" value="proprietary" disabled>
+				<label for="s_driver_proprietary">Proprietary</label>
+				<br><br>
+
+			</div>
+
+			<label for="s_wifi"><span class="label">Third-Party Wi-Fi Drivers </span><a class="help">(?)</a></label>
 			<br>
-			<input type="number" min="0" id="s_size_swap" name="s_size_swap" onkeypress="return val_num(event)" disabled><i> GiB</i>
-			<br><br>
-			<label for="s_size_root">Root Partition Size</label>
-			<br>
-			<input type="number" min="0" id="s_size_root" name="s_size_root" onkeypress="return val_num(event)" disabled><i> GiB</i>
-			<br><br>
-			<label for="s_size_home">Home Partition Size</label>
-			<br>
-			<input type="checkbox" id="home_remainder" value="remainder" disabled>
-			<label for="home_remainder">Remainder</label>
-			<br>
-			<input type="number" min="0" id="s_size_home" name="s_size_home" onkeypress="return val_num(event)" disabled><i> GiB</i>
-			<br><br>
+			<input type="checkbox" id="s_wifi_rtl88xxau-aircrack-dkms-git" value="rtl88xxau-aircrack-dkms-git">
+			<label for="s_wifi_rtl88xxau-aircrack-dkms-git">RTL88XXAU</label>
 
 		</div>
 
-	</div>
+		<h2>Rice</h2>
 
-	<div id="drivers">
+		<h2>Additional Packs</h2>
 
-		<h2>Drivers</h2>
+		<h2>Finish</h2>
 
-		<label for="s_display"><span class="label">Display Type </span><a class="help">(?)</a></label>
-		<br>
-		<input type="radio" id="s_display_intel" name="s_display" value="intel">
-		<label for="s_display_intel">Intel</label>
-		<br>
-		<input type="radio" id="s_display_amd" name="s_display" value="amd">
-		<label for="s_display_amd">AMD</label>
-		<br>
-		<input type="radio" id="s_display_nvidia" name="s_display" value="nvidia">
-		<label for="s_display_nvidia">Nvidia</label>
-		<br>
-		<input type="radio" id="s_display_none" name="s_display" value="none">
-		<label for="s_display_none">None</label>
-		<br>
-		<br><br>
+		<button>Cook!</button>
 
-		<div id="drivers-toggle" class="disabled">
-
-			<label for="s_driver"><span class="label">Display Driver Type </span><a class="help">(?)</a></label>
-			<br>
-			<input type="radio" id="s_driver_open" name="s_driver" value="open" disabled>
-			<label for="s_driver_open">Open</label>
-			<br>
-			<input type="radio" id="s_driver_proprietary" name="s_driver" value="proprietary" disabled>
-			<label for="s_driver_proprietary">Proprietary</label>
-			<br><br>
-
+		<div id="help-menu" class="hidden">
+			<div id="help-menu-bar">
+				<p id="help-menu-bar-title"></p><a id="help-menu-bar-close">x</a>
+			</div>
+			<div id="help-menu-body">
+			</div>
 		</div>
-
-		<label for="s_wifi"><span class="label">Third-Party Wi-Fi Drivers </span><a class="help">(?)</a></label>
-		<br>
-		<input type="checkbox" id="s_wifi_rtl88xxau-aircrack-dkms-git" value="rtl88xxau-aircrack-dkms-git">
-		<label for="s_wifi_rtl88xxau-aircrack-dkms-git">RTL88XXAU</label>
-
-	</div>
-
-	<h2>Rice</h2>
-
-	<h2>Additional Packs</h2>
-
-	<h2>Finish</h2>
-
-	<button>Cook!</button>
-
-	<div id="help-menu" class="hidden">
-		<div id="help-menu-bar">
-			<p id="help-menu-bar-title"></p><a id="help-menu-bar-close">x</a>
-		</div>
-		<div id="help-menu-body">
-		</div>
+	
 	</div>
 
 </body>
