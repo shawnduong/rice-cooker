@@ -1,5 +1,6 @@
 /* From: /assets/json/presets_locality.json */
 var presetsLocality = {};
+var homePartitionSizeBuffer = "";
 
 /* Populate options from JSON. */
 $(document).ready(function()
@@ -48,5 +49,42 @@ $("#preset_locality").change(function()
 	{
 		$("#s_timezone").attr("disabled", false);
 		$("#s_locale").attr("disabled", false);
+	}
+});
+
+/* Handle partition size presetting. */
+$("#preset_partitions_recommended").click(function()
+{
+	$("#preset_disk_size").attr("disabled", false);
+	$("#s_size_boot").attr("disabled", true);
+	$("#s_size_swap").attr("disabled", true);
+	$("#s_size_root").attr("disabled", true);
+	$("#home_remainder").attr("disabled", true);
+	$("#s_size_home").attr("disabled", true);
+});
+$("#preset_partitions_custom").click(function()
+{
+	$("#preset_disk_size").attr("disabled", true);
+	$("#s_size_boot").attr("disabled", false);
+	$("#s_size_swap").attr("disabled", false);
+	$("#s_size_root").attr("disabled", false);
+	$("#home_remainder").attr("disabled", false);
+	if ($("#home_remainder").is(":checked"))
+		$("#s_size_home").attr("disabled", true);
+	else
+		$("#s_size_home").attr("disabled", false);
+});
+$("#home_remainder").click(function()
+{
+	if ($(this).is(":checked"))
+	{
+		homePartitionSizeBuffer = $("#s_size_home").val();
+		$("#s_size_home").val("").change();
+		$("#s_size_home").attr("disabled", true);
+	}
+	else
+	{
+		$("#s_size_home").val(homePartitionSizeBuffer).change();
+		$("#s_size_home").attr("disabled", false);
 	}
 });
