@@ -43,76 +43,83 @@
 
 	<button>Import Saved Configuration</button>
 
-	<h2>Personal</h2>
+	<div id="personal">
 
-	<label for="s_username">Username</label>
-	<br>
-	<input type="text" id="s_username" name="s_username"></input>
-	<br><br>
+		<h2>Personal</h2>
 
-	<label for="s_hostname">Hostname</label>
-	<br>
-	<input type="text" id="s_hostname" name="s_hostname"></input>
-	<br><br>
+		<label for="s_username">Username</label>
+		<br>
+		<input type="text" id="s_username" name="s_username"></input>
+		<br><br>
 
-	<label for="s_home_style">Home Style</label>
-	<br>
-	<input type="radio" id="s_home_style_full" name="s_home_style" value="full">
-	<label for="s_home_style_full">Full</label>
-	<br>
-	<input type="radio" id="s_home_style_minimal" name="s_home_style" value="minimal">
-	<label for="s_home_style_minimal">Minimal</label>
-	<br>
-	<input type="radio" id="s_home_style_none" name="s_home_style" value="none">
-	<label for="s_home_style_none">None</label>
+		<label for="s_hostname">Hostname</label>
+		<br>
+		<input type="text" id="s_hostname" name="s_hostname"></input>
+		<br><br>
 
-	<h2>Locality</h2>
+		<label for="s_home_style">Home Style</label>
+		<br>
+		<input type="radio" id="s_home_style_full" name="s_home_style" value="full">
+		<label for="s_home_style_full">Full</label>
+		<br>
+		<input type="radio" id="s_home_style_minimal" name="s_home_style" value="minimal">
+		<label for="s_home_style_minimal">Minimal</label>
+		<br>
+		<input type="radio" id="s_home_style_none" name="s_home_style" value="none">
+		<label for="s_home_style_none">None</label>
 
-	<label for="preset_locality">Presets</label>
-	<br>
-	<select name="preset_locality" id="preset_locality">
-		<option selected disabled hidden style="display: none" value=""></option>
-	</select>
-	<br><br>
+	</div>
 
-	<label for="s_timezone">Timezone</label>
-	<br>
-	<select name="s_timezone" id="s_timezone" disabled>
-		<option selected disabled hidden style="display: none" value=""></option>
-	</select>
-	<br><br>
+	<div id="locality">
 
-	<label for="s_locale">Locale</label>
-	<br>
-	<select name="s_locale" id="s_locale" disabled>
-		<option selected disabled hidden style="display: none" value=""></option>
-	</select>
+		<h2>Locality</h2>
 
-	<h2>Disk</h2>
+		<label for="preset_locality">Presets</label>
+		<br>
+		<select name="preset_locality" id="preset_locality">
+			<option selected disabled hidden style="display: none" value=""></option>
+		</select>
+		<br><br>
 
-	<label for="s_encrypt">Security</label>
-	<br>
-	<input type="checkbox" id="s_encrypt" name="s_encrypt" value="encrypt">
-	<label for="s_encrypt">Enable Encryption</label>
-	<br><br>
+		<label for="s_timezone">Timezone</label>
+		<br>
+		<select name="s_timezone" id="s_timezone" disabled>
+			<option selected disabled hidden style="display: none" value=""></option>
+		</select>
+		<br><br>
 
-	<label for="preset_partitions">Partition Sizes</label>
-	<br>
-	<input type="radio" id="preset_partitions_recommended" name="preset_partitions" value="recommended">
-	<label for="preset_partitions_recommended">Recommended</label>
-	<br>
-	<input type="radio" id="preset_partitions_custom" name="preset_partitions" value="custom">
-	<label for="preset_partitions_custom">Custom</label>
-	<br><br>
+		<label for="s_locale">Locale</label>
+		<br>
+		<select name="s_locale" id="s_locale" disabled>
+			<option selected disabled hidden style="display: none" value=""></option>
+		</select>
 
-	<div id="disk-recommended">
+	</div>
+
+	<div id="disk">
+
+		<h2>Disk</h2>
+
+		<label for="s_encrypt">Security</label>
+		<br>
+		<input type="checkbox" id="s_encrypt" name="s_encrypt" value="encrypt">
+		<label for="s_encrypt">Enable Encryption</label>
+		<br><br>
+
+		<label for="preset_partitions">Partition Sizes</label>
+		<br>
+		<input type="radio" id="preset_partitions_recommended" name="preset_partitions" value="recommended">
+		<label for="preset_partitions_recommended">Recommended</label>
+		<br>
+		<input type="radio" id="preset_partitions_custom" name="preset_partitions" value="custom">
+		<label for="preset_partitions_custom">Custom</label>
+		<br><br>
+
 		<label for="preset_disk_size">Approximate Disk Size</label>
 		<br>
 		<input type="number" min="0" id="preset_disk_size" name="preset_disk_size" onkeypress="return val_num(event)" disabled><i> GiB</i>
 		<br><br>
-	</div>
 
-	<div id="disk-custom">
 		<label for="s_size_boot">Boot Partition Size</label>
 		<br>
 		<input type="number" min="0" id="s_size_boot" name="s_size_boot" onkeypress="return val_num(event)" disabled><i> MiB</i>
@@ -132,35 +139,40 @@
 		<br>
 		<input type="number" min="0" id="s_size_home" name="s_size_home" onkeypress="return val_num(event)" disabled><i> GiB</i>
 		<br><br>
+
 	</div>
 
-	<h2>Drivers</h2>
+	<div id="drivers">
 
-	<label for="s_home_style">Display Type</label>
-	<br>
-	<input type="radio" id="s_display_intel" name="s_display" value="intel">
-	<label for="s_display_intel">Intel</label>
-	<br>
-	<input type="radio" id="s_display_amd" name="s_display" value="amd">
-	<label for="s_display_amd">AMD</label>
-	<br>
-	<input type="radio" id="s_display_nvidia" name="s_display" value="nvidia">
-	<label for="s_display_nvidia">Nvidia</label>
-	<br><br>
+		<h2>Drivers</h2>
 
-	<label for="s_home_style">Display Driver Type</label>
-	<br>
-	<input type="radio" id="s_driver_open" name="s_driver" value="open" disabled>
-	<label for="s_driver_open">Open</label>
-	<br>
-	<input type="radio" id="s_driver_proprietary" name="s_driver" value="proprietary" disabled>
-	<label for="s_driver_proprietary">Proprietary</label>
-	<br><br>
+		<label for="s_home_style">Display Type</label>
+		<br>
+		<input type="radio" id="s_display_intel" name="s_display" value="intel">
+		<label for="s_display_intel">Intel</label>
+		<br>
+		<input type="radio" id="s_display_amd" name="s_display" value="amd">
+		<label for="s_display_amd">AMD</label>
+		<br>
+		<input type="radio" id="s_display_nvidia" name="s_display" value="nvidia">
+		<label for="s_display_nvidia">Nvidia</label>
+		<br><br>
 
-	<label for="s_wifi">Third-Party Wi-Fi Drivers</label>
-	<br>
-	<input type="checkbox" id="s_wifi_rtl88xxau-aircrack-dkms-git" value="rtl88xxau-aircrack-dkms-git">
-	<label for="s_wifi_rtl88xxau-aircrack-dkms-git">RTL88XXAU</label>
+		<label for="s_home_style">Display Driver Type</label>
+		<br>
+		<input type="radio" id="s_driver_open" name="s_driver" value="open" disabled>
+		<label for="s_driver_open">Open</label>
+		<br>
+		<input type="radio" id="s_driver_proprietary" name="s_driver" value="proprietary" disabled>
+		<label for="s_driver_proprietary">Proprietary</label>
+		<br><br>
+
+		<label for="s_wifi">Third-Party Wi-Fi Drivers</label>
+		<br>
+		<input type="checkbox" id="s_wifi_rtl88xxau-aircrack-dkms-git" value="rtl88xxau-aircrack-dkms-git">
+		<label for="s_wifi_rtl88xxau-aircrack-dkms-git">RTL88XXAU</label>
+
+	</div>
 
 	<h2>Rice</h2>
 
