@@ -108,7 +108,7 @@ hr {
 	border-width: 4px;
 }
 
-.disabled {
+.disabled, .disabled .label, .disabled .help {
 	color: #aaa5a5;
 }
 
