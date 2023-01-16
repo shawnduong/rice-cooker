@@ -64,6 +64,24 @@ function _populate_rice_helper(jsonPath, target)
 	});
 }
 
+/* Populate additional packs options. */
+function populate_packs()
+{
+	$.getJSON("/assets/json/packs.json", function(data)
+	{
+		$.each(data, function(i, item)
+		{
+			$("#additional-packs-options").append(
+				$("<input type='checkbox' id='s_additional_pack_"+item.name+"' value='"+item.name+"'>")
+			);
+			$("#additional-packs-options").append(
+				$("<label for='s_additional_pack_"+item.name+"'></label><br>")
+				.val(item.displayName).html(" "+item.displayName)
+			);
+		});
+	});
+}
+
 /* Handle a rice "none" config. Give it the toggle ID, config ID, and script ID. */
 function handle_none(object, toggle, config, script)
 {

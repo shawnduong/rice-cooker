@@ -12,6 +12,7 @@ $(document).ready(function()
 	/* Populate. */
 	populate_locality();
 	populate_rice();
+	populate_packs();
 });
 
 /* Handle locality presetting. */
