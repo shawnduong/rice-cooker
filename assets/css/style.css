@@ -15,6 +15,10 @@ body {
 	display: none;
 }
 
+.label {
+	vertical-align: middle;
+}
+
 #help-menu {
 	position: absolute;
 	left: 50%;
@@ -44,4 +48,13 @@ body {
 	background-color: blue;
 	min-height: 128px;
 	border-radius: 0px 0px 8px 8px;
+}
+
+#help-menu-bar-title:hover {
+	cursor: default;
+}
+
+#help-menu-bar-close:hover {
+	cursor: pointer;
+	background-color: green;
 }
