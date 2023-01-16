@@ -2,3 +2,7 @@ body {
 	margin-left: 15%;
 	margin-right: 15%;
 }
+
+.disabled {
+	color: #777777;
+}

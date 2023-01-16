@@ -44,11 +44,13 @@ $("#preset_locality").change(function()
 		$("#s_locale").val(preset.locale).change();
 		$("#s_timezone").attr("disabled", true);
 		$("#s_locale").attr("disabled", true);
+		$("#locality-toggle").addClass("disabled");
 	}
 	else
 	{
 		$("#s_timezone").attr("disabled", false);
 		$("#s_locale").attr("disabled", false);
+		$("#locality-toggle").removeClass("disabled");
 	}
 });
 
@@ -65,6 +67,9 @@ $("#preset_partitions_recommended").click(function()
 	$("#home_remainder").prop("checked", true);
 	homePartitionSizeBuffer = $("#s_size_home").val();
 	$("#s_size_home").val("").change();
+
+	$("#disk-toggle-1").removeClass("disabled");
+	$("#disk-toggle-2").addClass("disabled");
 });
 $("#preset_partitions_custom").click(function()
 {
@@ -78,6 +83,9 @@ $("#preset_partitions_custom").click(function()
 		$("#s_size_home").attr("disabled", true);
 	else
 		$("#s_size_home").attr("disabled", false);
+
+	$("#disk-toggle-1").addClass("disabled");
+	$("#disk-toggle-2").removeClass("disabled");
 });
 $("#home_remainder").click(function()
 {
@@ -134,18 +142,28 @@ $("#s_display_intel").click(function()
 	$("#s_driver_open").attr("disabled", false);
 	$("#s_driver_proprietary").attr("disabled", true);
 	$("#s_driver_open").prop("checked", true);
+
+	$("#drivers-toggle").addClass("disabled");
 });
 $("#s_display_amd").click(function()
 {
 	$("#s_driver_open").attr("disabled", false);
 	$("#s_driver_proprietary").attr("disabled", false);
-	$("#s_driver_open").prop("checked", true);
+
+	if (!($("#s_driver_open").is(":checked") || $("#s_driver_proprietary").is(":checked")))
+		$("#s_driver_open").prop("checked", true);
+
+	$("#drivers-toggle").removeClass("disabled");
 });
 $("#s_display_nvidia").click(function()
 {
 	$("#s_driver_open").attr("disabled", false);
 	$("#s_driver_proprietary").attr("disabled", false);
-	$("#s_driver_open").prop("checked", true);
+
+	if (!($("#s_driver_open").is(":checked") || $("#s_driver_proprietary").is(":checked")))
+		$("#s_driver_open").prop("checked", true);
+
+	$("#drivers-toggle").removeClass("disabled");
 });
 
 /* Validate numerical input. */

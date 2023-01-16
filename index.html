@@ -81,18 +81,22 @@
 		</select>
 		<br><br>
 
-		<label for="s_timezone">Timezone</label>
-		<br>
-		<select name="s_timezone" id="s_timezone" disabled>
-			<option selected disabled hidden style="display: none" value=""></option>
-		</select>
-		<br><br>
+		<div id="locality-toggle" class="disabled">
 
-		<label for="s_locale">Locale</label>
-		<br>
-		<select name="s_locale" id="s_locale" disabled>
-			<option selected disabled hidden style="display: none" value=""></option>
-		</select>
+			<label for="s_timezone">Timezone</label>
+			<br>
+			<select name="s_timezone" id="s_timezone" disabled>
+				<option selected disabled hidden style="display: none" value=""></option>
+			</select>
+			<br><br>
+
+			<label for="s_locale">Locale</label>
+			<br>
+			<select name="s_locale" id="s_locale" disabled>
+				<option selected disabled hidden style="display: none" value=""></option>
+			</select>
+
+		</div>
 
 	</div>
 
@@ -115,30 +119,38 @@
 		<label for="preset_partitions_custom">Custom</label>
 		<br><br>
 
-		<label for="preset_disk_size">Approximate Disk Size</label>
-		<br>
-		<input type="number" min="0" id="preset_disk_size" name="preset_disk_size" onkeypress="return val_num(event)" disabled><i> GiB</i>
-		<br><br>
+		<div id="disk-toggle-1" class="disabled">
 
-		<label for="s_size_boot">Boot Partition Size</label>
-		<br>
-		<input type="number" min="0" id="s_size_boot" name="s_size_boot" onkeypress="return val_num(event)" disabled><i> MiB</i>
-		<br><br>
-		<label for="s_size_swap">Swap Partition Size</label>
-		<br>
-		<input type="number" min="0" id="s_size_swap" name="s_size_swap" onkeypress="return val_num(event)" disabled><i> GiB</i>
-		<br><br>
-		<label for="s_size_root">Root Partition Size</label>
-		<br>
-		<input type="number" min="0" id="s_size_root" name="s_size_root" onkeypress="return val_num(event)" disabled><i> GiB</i>
-		<br><br>
-		<label for="s_size_home">Home Partition Size</label>
-		<br>
-		<input type="checkbox" id="home_remainder" value="remainder" disabled>
-		<label for="home_remainder">Remainder</label>
-		<br>
-		<input type="number" min="0" id="s_size_home" name="s_size_home" onkeypress="return val_num(event)" disabled><i> GiB</i>
-		<br><br>
+			<label for="preset_disk_size">Approximate Disk Size</label>
+			<br>
+			<input type="number" min="0" id="preset_disk_size" name="preset_disk_size" onkeypress="return val_num(event)" disabled><i> GiB</i>
+			<br><br>
+
+		</div>
+
+		<div id="disk-toggle-2" class="disabled">
+
+			<label for="s_size_boot">Boot Partition Size</label>
+			<br>
+			<input type="number" min="0" id="s_size_boot" name="s_size_boot" onkeypress="return val_num(event)" disabled><i> MiB</i>
+			<br><br>
+			<label for="s_size_swap">Swap Partition Size</label>
+			<br>
+			<input type="number" min="0" id="s_size_swap" name="s_size_swap" onkeypress="return val_num(event)" disabled><i> GiB</i>
+			<br><br>
+			<label for="s_size_root">Root Partition Size</label>
+			<br>
+			<input type="number" min="0" id="s_size_root" name="s_size_root" onkeypress="return val_num(event)" disabled><i> GiB</i>
+			<br><br>
+			<label for="s_size_home">Home Partition Size</label>
+			<br>
+			<input type="checkbox" id="home_remainder" value="remainder" disabled>
+			<label for="home_remainder">Remainder</label>
+			<br>
+			<input type="number" min="0" id="s_size_home" name="s_size_home" onkeypress="return val_num(event)" disabled><i> GiB</i>
+			<br><br>
+
+		</div>
 
 	</div>
 
@@ -158,14 +170,18 @@
 		<label for="s_display_nvidia">Nvidia</label>
 		<br><br>
 
-		<label for="s_home_style">Display Driver Type</label>
-		<br>
-		<input type="radio" id="s_driver_open" name="s_driver" value="open" disabled>
-		<label for="s_driver_open">Open</label>
-		<br>
-		<input type="radio" id="s_driver_proprietary" name="s_driver" value="proprietary" disabled>
-		<label for="s_driver_proprietary">Proprietary</label>
-		<br><br>
+		<div id="drivers-toggle" class="disabled">
+
+			<label for="s_home_style">Display Driver Type</label>
+			<br>
+			<input type="radio" id="s_driver_open" name="s_driver" value="open" disabled>
+			<label for="s_driver_open">Open</label>
+			<br>
+			<input type="radio" id="s_driver_proprietary" name="s_driver" value="proprietary" disabled>
+			<label for="s_driver_proprietary">Proprietary</label>
+			<br><br>
+
+		</div>
 
 		<label for="s_wifi">Third-Party Wi-Fi Drivers</label>
 		<br>
