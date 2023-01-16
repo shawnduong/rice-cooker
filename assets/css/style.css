@@ -1,6 +1,11 @@
+:root {
+	--background: #F5F5DC;  /* Light beige */
+}
+
 body {
 	margin-left: 15%;
 	margin-right: 15%;
+	background-color: var(--background);
 }
 
 .disabled {
@@ -48,6 +53,11 @@ body {
 	background-color: blue;
 	min-height: 128px;
 	border-radius: 0px 0px 8px 8px;
+}
+
+#help-menu-body p {
+	margin: 0;
+	padding: 8px;
 }
 
 #help-menu-bar-title:hover {

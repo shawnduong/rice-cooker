@@ -175,21 +175,23 @@ $(".help").click(function(e)
 		$("#help-menu").fadeOut("slow", function() { $("#help-menu").addClass("hidden") });
 		helpItem = "";
 	}
-	else if ($("#help-menu").hasClass("hidden"))
-	{
-		$("#help-menu").css("top", e.pageY - 64);
-		$("#help-menu").fadeIn("slow");
-		$("#help-menu").removeClass("hidden");
-
-		helpItem = this.parentElement.htmlFor;
-		$("#help-menu-bar-title").text(helpItem);
-	}
 	else
 	{
-		$("#help-menu").animate({top: e.pageY-64});
+		if ($("#help-menu").hasClass("hidden"))
+		{
+			$("#help-menu").css("top", e.pageY - 64);
+			$("#help-menu").fadeIn("slow");
+			$("#help-menu").removeClass("hidden");
+		}
+		else
+		{
+			$("#help-menu").animate({top: e.pageY-64});
+		}
 
 		helpItem = this.parentElement.htmlFor;
 		$("#help-menu-bar-title").text(helpItem);
+
+		$("#help-menu-body").load("/assets/html/help/"+helpItem+".html");
 	}
 });
 $("#help-menu-bar-close").click(function()
