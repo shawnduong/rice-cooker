@@ -48,12 +48,12 @@
 
 		<h2>Personal</h2>
 
-		<label for="s_username">Username</label>
+		<label for="s_username">Username <a class="help">(?)</a></label>
 		<br>
 		<input type="text" id="s_username" name="s_username"></input>
 		<br><br>
 
-		<label for="s_hostname">Hostname</label>
+		<label for="s_hostname">Hostname <a class="help">(?)</a></label>
 		<br>
 		<input type="text" id="s_hostname" name="s_hostname"></input>
 		<br><br>
@@ -198,6 +198,12 @@
 	<h2>Finish</h2>
 
 	<button>Cook!</button>
+
+	<div id="help-menu" class="hidden">
+		<div id="help-menu-bar">
+			<p id="help-menu-bar-title"></p><a id="help-menu-bar-close">x</a>
+		</div>
+	</div>
 
 </body>
 

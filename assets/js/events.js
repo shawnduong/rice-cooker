@@ -165,3 +165,26 @@ $("#s_display_nvidia").click(function()
 
 	$("#drivers-toggle").removeClass("disabled");
 });
+
+/* Help menu. */
+$(".help").click(function(e)
+{
+	let item = this.parentElement.htmlFor;
+
+	if ($("#help-menu").hasClass("hidden"))
+	{
+		$("#help-menu").css("top", e.pageY - 64);
+		$("#help-menu").fadeIn("slow");
+		$("#help-menu").removeClass("hidden");
+	}
+	else
+	{
+		$("#help-menu").animate({top: e.pageY-64});
+	}
+
+	$("#help-menu-bar-title").text(item);
+});
+$("#help-menu-bar-close").click(function()
+{
+	$("#help-menu").fadeOut("slow", function() { $("#help-menu").addClass("hidden") });
+});

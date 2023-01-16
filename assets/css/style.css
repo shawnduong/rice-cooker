@@ -6,3 +6,39 @@ body {
 .disabled {
 	color: #777777;
 }
+
+.help {
+	font-size: 8pt;
+}
+
+.hidden {
+	display: none;
+}
+
+#help-menu {
+	background-color: grey;
+	position: absolute;
+	left: 50%;
+	min-height: 128px;
+	width: 35%;
+}
+
+#help-menu-bar {
+	background-color: red;
+}
+
+#help-menu-bar-title {
+	display: inline-block;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding: 4px 8px 4px 8px;
+}
+
+#help-menu-bar-close {
+	display: inline-block;
+	float: right;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding: 4px 8px 4px 8px;
+	background-color: cyan;
+}
