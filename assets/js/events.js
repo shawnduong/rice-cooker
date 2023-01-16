@@ -1,6 +1,7 @@
 /* From: /assets/json/presets_locality.json */
 var presetsLocality = {};
 var homePartitionSizeBuffer = "";
+var helpItem = "";
 
 /* Populate options from JSON. */
 $(document).ready(function()
@@ -169,22 +170,30 @@ $("#s_display_nvidia").click(function()
 /* Help menu. */
 $(".help").click(function(e)
 {
-	let item = this.parentElement.htmlFor;
-
-	if ($("#help-menu").hasClass("hidden"))
+	if (helpItem == this.parentElement.htmlFor)
+	{
+		$("#help-menu").fadeOut("slow", function() { $("#help-menu").addClass("hidden") });
+		helpItem = "";
+	}
+	else if ($("#help-menu").hasClass("hidden"))
 	{
 		$("#help-menu").css("top", e.pageY - 64);
 		$("#help-menu").fadeIn("slow");
 		$("#help-menu").removeClass("hidden");
+
+		helpItem = this.parentElement.htmlFor;
+		$("#help-menu-bar-title").text(helpItem);
 	}
 	else
 	{
 		$("#help-menu").animate({top: e.pageY-64});
-	}
 
-	$("#help-menu-bar-title").text(item);
+		helpItem = this.parentElement.htmlFor;
+		$("#help-menu-bar-title").text(helpItem);
+	}
 });
 $("#help-menu-bar-close").click(function()
 {
 	$("#help-menu").fadeOut("slow", function() { $("#help-menu").addClass("hidden") });
+	helpItem = "";
 });
