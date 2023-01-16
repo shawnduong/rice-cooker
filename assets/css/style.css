@@ -16,29 +16,32 @@ body {
 }
 
 #help-menu {
-	background-color: grey;
 	position: absolute;
 	left: 50%;
-	min-height: 128px;
 	width: 35%;
 }
 
 #help-menu-bar {
 	background-color: red;
+	border-radius: 8px 8px 0px 0px;
+	overflow: hidden;
 }
 
 #help-menu-bar-title {
-	display: inline-block;
-	margin-top: 0;
-	margin-bottom: 0;
-	padding: 4px 8px 4px 8px;
+	margin: 0;
+	float: left;
+	padding: 4px 8px;
 }
 
 #help-menu-bar-close {
-	display: inline-block;
+	margin: 0;
 	float: right;
-	margin-top: 0;
-	margin-bottom: 0;
-	padding: 4px 8px 4px 8px;
-	background-color: cyan;
+	padding: 4px 8px;
+	background-color: pink;
+}
+
+#help-menu-body {
+	background-color: blue;
+	min-height: 128px;
+	border-radius: 0px 0px 8px 8px;
 }
