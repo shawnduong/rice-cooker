@@ -33,6 +33,8 @@ $(document).ready(function()
 			$("#s_locale").append($("<option></option>").val(item).html(item));
 		});
 	});
+
+	populate_rice();
 });
 
 /* Handle locality presetting. */
@@ -207,4 +209,46 @@ $("#help-menu-bar-close").click(function()
 {
 	$("#help-menu").fadeOut("slow", function() { $("#help-menu").addClass("hidden") });
 	helpItem = "";
+});
+
+/* Handle None rice configs. */
+$("#s_wmde").change(function()
+{
+	handle_none(this, "#wmde-toggle", "#s_wmde_config", "#s_wmde_config_script");
+});
+$("#s_greeter").change(function()
+{
+	handle_none(this, "#greeter-toggle", "#s_greeter_config", "#s_greeter_config_script");
+});
+$("#s_compositor").change(function()
+{
+	handle_none(this, "#compositor-toggle", "#s_compositor_config", "#s_compositor_config_script");
+});
+$("#s_app_launcher").change(function()
+{
+	handle_none(this, "#app_launcher-toggle", "#s_app_launcher_config", "#s_app_launcher_config_script");
+});
+$("#s_status_bar").change(function()
+{
+	handle_none(this, "#status_bar-toggle", "#s_status_bar_config", "#s_status_bar_config_script");
+});
+$("#s_terminal").change(function()
+{
+	handle_none(this, "#terminal-toggle", "#s_terminal_config", "#s_terminal_config_script");
+});
+$("#s_editor").change(function()
+{
+	handle_none(this, "#editor-toggle", "#s_editor_config", "#s_editor_config_script");
+});
+$("#s_lockscreen").change(function()
+{
+	handle_none(this, "#lockscreen-toggle", "#s_lockscreen_config", "#s_lockscreen_config_script");
+});
+$("#s_wallpaper").change(function()
+{
+	handle_none(this, "#wallpaper-toggle", "#s_wallpaper_config", "#s_wallpaper_config_script");
+});
+$("#s_browser").change(function()
+{
+	handle_none(this, "#browser-toggle", "#s_browser_config", "#s_browser_config_script");
 });

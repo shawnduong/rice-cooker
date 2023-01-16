@@ -1,0 +1,12 @@
+[
+	{
+		"name": "None",
+		"package": "none",
+		"aur": false
+	},
+	{
+		"name": "i3",
+		"package": "i3-wm",
+		"aur": false
+	}
+]

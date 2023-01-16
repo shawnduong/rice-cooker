@@ -50,12 +50,12 @@
 
 		<label for="s_username"><span class="label">Username </span><a class="help">(?)</a></label>
 		<br>
-		<input type="text" id="s_username" name="s_username"></input>
+		<input type="text" id="s_username" name="s_username">
 		<br><br>
 
 		<label for="s_hostname"><span class="label">Hostname </span><a class="help">(?)</a></label>
 		<br>
-		<input type="text" id="s_hostname" name="s_hostname"></input>
+		<input type="text" id="s_hostname" name="s_hostname">
 		<br><br>
 
 		<label for="s_home_style"><span class="label">Home Style </span><a class="help">(?)</a></label>
@@ -195,7 +195,201 @@
 
 	</div>
 
-	<h2>Rice</h2>
+	<div id="rice">
+
+		<h2>Rice</h2>
+
+		<!-- WM/DE -->
+
+		<label for="s_wmde"><span class="label">WM/DE </span><a class="help">(?)</a></label>
+		<br>
+		<select name="s_wmde" id="s_wmde">
+			<option selected disabled hidden style="display: none" value=""></option>
+		</select>
+		<br><br>
+
+		<div id="wmde-toggle" class="disabled">
+			<label for="s_wmde_config"><span class="label">WM/DE Config URL </span><a class="help">(?)</a></label>
+			<br>
+			<input type="checkbox" id="s_wmde_config_script" value="true" disabled>
+			<label for="s_wmde_config_script">Install script</label>
+			<br>
+			<input type="text" id="s_wmde_config" name="s_wmde_config" disabled>
+			<br><br>
+		</div>
+
+		<!-- Greeter -->
+
+		<label for="s_greeter"><span class="label">Greeter </span><a class="help">(?)</a></label>
+		<br>
+		<select name="s_greeter" id="s_greeter">
+			<option selected disabled hidden style="display: none" value=""></option>
+		</select>
+		<br><br>
+
+		<div id="greeter-toggle" class="disabled">
+			<label for="s_greeter_config"><span class="label">Greeter Config URL </span><a class="help">(?)</a></label>
+			<br>
+			<input type="checkbox" id="s_greeter_config_script" value="true" disabled>
+			<label for="s_greeter_config_script">Install script</label>
+			<br>
+			<input type="text" id="s_greeter_config" name="s_greeter_config" disabled>
+			<br><br>
+		</div>
+
+		<!-- Compositor -->
+
+		<label for="s_compositor"><span class="label">Compositor </span><a class="help">(?)</a></label>
+		<br>
+		<select name="s_compositor" id="s_compositor">
+			<option selected disabled hidden style="display: none" value=""></option>
+		</select>
+		<br><br>
+
+		<div id="compositor-toggle" class="disabled">
+			<label for="s_compositor_config"><span class="label">Compositor Config URL </span><a class="help">(?)</a></label>
+			<br>
+			<input type="checkbox" id="s_compositor_config_script" value="true" disabled>
+			<label for="s_compositor_config_script">Install script</label>
+			<br>
+			<input type="text" id="s_compositor_config" name="s_compositor_config" disabled>
+			<br><br>
+		</div>
+
+		<!-- App Launcher -->
+
+		<label for="s_app_launcher"><span class="label">App Launcher </span><a class="help">(?)</a></label>
+		<br>
+		<select name="s_app_launcher" id="s_app_launcher">
+			<option selected disabled hidden style="display: none" value=""></option>
+		</select>
+		<br><br>
+
+		<div id="app_launcher-toggle" class="disabled">
+			<label for="s_app_launcher_config"><span class="label">App Launcher Config URL </span><a class="help">(?)</a></label>
+			<br>
+			<input type="checkbox" id="s_app_launcher_config_script" value="true" disabled>
+			<label for="s_app_launcher_config_script">Install script</label>
+			<br>
+			<input type="text" id="s_app_launcher_config" name="s_app_launcher_config" disabled>
+			<br><br>
+		</div>
+
+		<!-- Status Bar -->
+
+		<label for="s_status_bar"><span class="label">Status Bar </span><a class="help">(?)</a></label>
+		<br>
+		<select name="s_status_bar" id="s_status_bar">
+			<option selected disabled hidden style="display: none" value=""></option>
+		</select>
+		<br><br>
+
+		<div id="status_bar-toggle" class="disabled">
+			<label for="s_status_bar_config"><span class="label">Status Bar Config URL </span><a class="help">(?)</a></label>
+			<br>
+			<input type="checkbox" id="s_status_bar_config_script" value="true" disabled>
+			<label for="s_status_bar_config_script">Install script</label>
+			<br>
+			<input type="text" id="s_status_bar_config" name="s_status_bar_config" disabled>
+			<br><br>
+		</div>
+
+		<!-- Terminal -->
+
+		<label for="s_terminal"><span class="label">Terminal </span><a class="help">(?)</a></label>
+		<br>
+		<select name="s_terminal" id="s_terminal">
+			<option selected disabled hidden style="display: none" value=""></option>
+		</select>
+		<br><br>
+
+		<div id="terminal-toggle" class="disabled">
+			<label for="s_terminal_config"><span class="label">Terminal Config URL </span><a class="help">(?)</a></label>
+			<br>
+			<input type="checkbox" id="s_terminal_config_script" value="true" disabled>
+			<label for="s_terminal_config_script">Install script</label>
+			<br>
+			<input type="text" id="s_terminal_config" name="s_terminal_config" disabled>
+			<br><br>
+		</div>
+
+		<!-- Editor -->
+
+		<label for="s_editor"><span class="label">Editor </span><a class="help">(?)</a></label>
+		<br>
+		<select name="s_editor" id="s_editor">
+			<option selected disabled hidden style="display: none" value=""></option>
+		</select>
+		<br><br>
+
+		<div id="editor-toggle" class="disabled">
+			<label for="s_editor_config"><span class="label">Editor Config URL </span><a class="help">(?)</a></label>
+			<br>
+			<input type="checkbox" id="s_editor_config_script" value="true" disabled>
+			<label for="s_editor_config_script">Install script</label>
+			<br>
+			<input type="text" id="s_editor_config" name="s_editor_config" disabled>
+			<br><br>
+		</div>
+
+		<!-- Lockscreen -->
+
+		<label for="s_lockscreen"><span class="label">Lockscreen </span><a class="help">(?)</a></label>
+		<br>
+		<select name="s_lockscreen" id="s_lockscreen">
+			<option selected disabled hidden style="display: none" value=""></option>
+		</select>
+		<br><br>
+
+		<div id="lockscreen-toggle" class="disabled">
+			<label for="s_lockscreen_config"><span class="label">Lockscreen Config URL </span><a class="help">(?)</a></label>
+			<br>
+			<input type="checkbox" id="s_lockscreen_config_script" value="true" disabled>
+			<label for="s_lockscreen_config_script">Install script</label>
+			<br>
+			<input type="text" id="s_lockscreen_config" name="s_lockscreen_config" disabled>
+			<br><br>
+		</div>
+
+		<!-- Wallpaper -->
+
+		<label for="s_wallpaper"><span class="label">Wallpaper </span><a class="help">(?)</a></label>
+		<br>
+		<select name="s_wallpaper" id="s_wallpaper">
+			<option selected disabled hidden style="display: none" value=""></option>
+		</select>
+		<br><br>
+
+		<div id="wallpaper-toggle" class="disabled">
+			<label for="s_wallpaper_config"><span class="label">Wallpaper Config URL </span><a class="help">(?)</a></label>
+			<br>
+			<input type="checkbox" id="s_wallpaper_config_script" value="true" disabled>
+			<label for="s_wallpaper_config_script">Install script</label>
+			<br>
+			<input type="text" id="s_wallpaper_config" name="s_wallpaper_config" disabled>
+			<br><br>
+		</div>
+
+		<!-- Browser -->
+
+		<label for="s_browser"><span class="label">Browser </span><a class="help">(?)</a></label>
+		<br>
+		<select name="s_browser" id="s_browser">
+			<option selected disabled hidden style="display: none" value=""></option>
+		</select>
+		<br><br>
+
+		<div id="browser-toggle" class="disabled">
+			<label for="s_browser_config"><span class="label">Browser Config URL </span><a class="help">(?)</a></label>
+			<br>
+			<input type="checkbox" id="s_browser_config_script" value="true" disabled>
+			<label for="s_browser_config_script">Install script</label>
+			<br>
+			<input type="text" id="s_browser_config" name="s_browser_config" disabled>
+			<br><br>
+		</div>
+
+	</div>
 
 	<h2>Additional Packs</h2>
 

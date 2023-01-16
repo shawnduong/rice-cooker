@@ -1,0 +1,22 @@
+[
+	{
+		"name": "None",
+		"package": "none",
+		"aur": false
+	},
+	{
+		"name": "rofi",
+		"package": "rofi",
+		"aur": false
+	},
+	{
+		"name": "dmenu",
+		"package": "dmenu",
+		"aur": false
+	},
+	{
+		"name": "eww",
+		"package": "eww",
+		"aur": true
+	}
+]

@@ -1,0 +1,22 @@
+[
+	{
+		"name": "None",
+		"package": "none",
+		"aur": false
+	},
+	{
+		"name": "Firefox",
+		"package": "firefox",
+		"aur": false
+	},
+	{
+		"name": "Chromium",
+		"package": "chromium",
+		"aur": false
+	},
+	{
+		"name": "Brave",
+		"package": "brave-bin",
+		"aur": true
+	}
+]

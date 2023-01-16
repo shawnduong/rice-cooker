@@ -1,0 +1,12 @@
+[
+	{
+		"name": "None",
+		"package": "none",
+		"aur": false
+	},
+	{
+		"name": "feh",
+		"package": "feh",
+		"aur": false
+	}
+]
