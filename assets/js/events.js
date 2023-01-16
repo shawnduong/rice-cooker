@@ -166,6 +166,15 @@ $("#s_display_nvidia").click(function()
 
 	$("#drivers-toggle").removeClass("disabled");
 });
+$("#s_display_none").click(function()
+{
+	$("#s_driver_open").attr("disabled", true);
+	$("#s_driver_proprietary").attr("disabled", true);
+	$("#s_driver_open").prop("checked", false);
+	$("#s_driver_proprietary").prop("checked", false);
+
+	$("#drivers-toggle").addClass("disabled");
+});
 
 /* Help menu. */
 $(".help").click(function(e)
@@ -189,7 +198,7 @@ $(".help").click(function(e)
 		}
 
 		helpItem = this.parentElement.htmlFor;
-		$("#help-menu-bar-title").text(helpItem);
+		$("#help-menu-bar-title").text("Help: "+this.parentElement.textContent.slice(0, -4));
 
 		$("#help-menu-body").load("/assets/html/help/"+helpItem+".html");
 	}

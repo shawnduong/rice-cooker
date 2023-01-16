@@ -105,13 +105,13 @@
 
 		<h2>Disk</h2>
 
-		<label for="s_encrypt">Security</label>
+		<label for="s_encrypt"><span class="label">Security </span><a class="help">(?)</a></label>
 		<br>
 		<input type="checkbox" id="s_encrypt" name="s_encrypt" value="encrypt">
 		<label for="s_encrypt">Enable encryption</label>
 		<br><br>
 
-		<label for="preset_partitions">Partition Sizes</label>
+		<label for="preset_partitions"><span class="label">Partition Sizes </span><a class="help">(?)</a></label>
 		<br>
 		<input type="radio" id="preset_partitions_recommended" name="preset_partitions" value="recommended">
 		<label for="preset_partitions_recommended">Recommended</label>
@@ -159,7 +159,7 @@
 
 		<h2>Drivers</h2>
 
-		<label for="s_home_style"><span class="label">Display Type </span><a class="help">(?)</a></label>
+		<label for="s_display"><span class="label">Display Type </span><a class="help">(?)</a></label>
 		<br>
 		<input type="radio" id="s_display_intel" name="s_display" value="intel">
 		<label for="s_display_intel">Intel</label>
@@ -169,6 +169,10 @@
 		<br>
 		<input type="radio" id="s_display_nvidia" name="s_display" value="nvidia">
 		<label for="s_display_nvidia">Nvidia</label>
+		<br>
+		<input type="radio" id="s_display_none" name="s_display" value="none">
+		<label for="s_display_none">None</label>
+		<br>
 		<br><br>
 
 		<div id="drivers-toggle" class="disabled">
