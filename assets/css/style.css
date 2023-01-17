@@ -98,12 +98,17 @@ hr {
 	border-color: #E79D9D;
 	border-radius: 40px;
 
+	outline-width: 2px;	
+	outline-style: hidden;
+
 	color: #D96B6B;
 
 }
 
 .main-body input:focus {
-	font-weight: 700;
+	padding: 8px;
+
+	font-weight: 500;
 	outline: none;
 	border-width: 4px;
 }
