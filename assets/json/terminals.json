@@ -6,7 +6,7 @@
 	},
 	{
 		"name": "st",
-		"package": "none",
+		"package": "https://git.suckless.org/st",
 		"aur": "git"
 	},
 	{
