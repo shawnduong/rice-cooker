@@ -198,6 +198,10 @@ hr {
 	cursor: pointer;
 }
 
+#recipe {
+	min-height: 100vh;
+}
+
 #gh-logo {
 	display: inline-block;
 	float: none;

@@ -154,4 +154,9 @@ function cook()
 	}
 
 	console.log(config);
+
+	/* Fade in the recipe menu and scroll in. */
+	$("#recipe").fadeIn("slow");
+	$("#recipe").removeClass("hidden");
+	$("#cook-scrollto")[0].scrollIntoView({ behavior: "smooth" });
 }
