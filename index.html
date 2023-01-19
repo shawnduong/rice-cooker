@@ -38,8 +38,7 @@
 <body>
 
 	<script src="/assets/js/lib/jquery-3.6.3.min.js" defer></script>
-	<script src="/assets/js/events.js" defer></script>
-	<script src="/assets/js/functions.js" defer></script>
+	<script src="/assets/js/main.js" type="module"></script>
 
 	<div class="about">
 
@@ -139,7 +138,7 @@
 
 				<label for="preset_disk_size">Approximate Disk Size</label>
 				<br>
-				<input type="number" min="0" id="preset_disk_size" name="preset_disk_size" onkeypress="return val_num(event)" disabled><i> GiB</i>
+				<input type="number" min="0" id="preset_disk_size" name="preset_disk_size" class="validate_numerical" disabled><i> GiB</i>
 				<br><br>
 
 			</div>
@@ -148,22 +147,22 @@
 
 				<label for="s_size_boot">Boot Partition Size</label>
 				<br>
-				<input type="number" min="0" id="s_size_boot" name="s_size_boot" onkeypress="return val_num(event)" disabled><i> MiB</i>
+				<input type="number" min="0" id="s_size_boot" name="s_size_boot" class="validate_numerical" disabled><i> MiB</i>
 				<br><br>
 				<label for="s_size_swap">Swap Partition Size</label>
 				<br>
-				<input type="number" min="0" id="s_size_swap" name="s_size_swap" onkeypress="return val_num(event)" disabled><i> GiB</i>
+				<input type="number" min="0" id="s_size_swap" name="s_size_swap" class="validate_numerical" disabled><i> GiB</i>
 				<br><br>
 				<label for="s_size_root">Root Partition Size</label>
 				<br>
-				<input type="number" min="0" id="s_size_root" name="s_size_root" onkeypress="return val_num(event)" disabled><i> GiB</i>
+				<input type="number" min="0" id="s_size_root" name="s_size_root" class="validate_numerical" disabled><i> GiB</i>
 				<br><br>
 				<label for="s_size_home">Home Partition Size</label>
 				<br>
 				<input type="checkbox" id="home_remainder" value="remainder" disabled>
 				<label for="home_remainder">Remainder</label>
 				<br>
-				<input type="number" min="0" id="s_size_home" name="s_size_home" onkeypress="return val_num(event)" disabled><i> GiB</i>
+				<input type="number" min="0" id="s_size_home" name="s_size_home" class="validate_numerical" disabled><i> GiB</i>
 				<br><br>
 
 			</div>
@@ -433,7 +432,7 @@
 			<label for="s_omurice">Additionally install Omurice, the post-installation config switcher.</label>
 			<br><br>
 
-			<button id="submit-button" onclick="cook()">Cook!</button>
+			<button id="submit-button">Cook!</button>
 
 		</div>
 
