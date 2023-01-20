@@ -1,11 +1,7 @@
-:root {
-	--background: #F5F5DC;  /* Light beige */
-}
-
 body {
 	margin: 0;
 	padding: 0;
-	background-color: var(--background);
+	background-color: #F5F5DC;
 	font-family: 'Poppins', sans-serif;
 	color: #59473A;
 }
@@ -121,6 +117,11 @@ hr {
 	display: none;
 }
 
+.required-notice {
+	color: red;
+	padding-left: 2em;
+}
+
 #gh-link {
 	font-weight: bolder;
 	text-decoration: none;
@@ -200,6 +201,13 @@ hr {
 
 #recipe {
 	min-height: 100vh;
+}
+
+#recipe-body {
+	background-color: #DCDCC6;
+	font-family: monospace;
+	padding: 8px;
+	border: 1px solid #abab9a;
 }
 
 #gh-logo {
