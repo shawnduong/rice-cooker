@@ -82,7 +82,31 @@ export function cook()
 	let recipe = "# Rice Cooker Recipe (rice.shawnd.xyz) <br>";
 
 	/* Create the recipe contents. */
-	for (const k in config) { recipe += k+'="'+config[k]+'"<br>'; }
+	for (const k in config)
+	{
+		if (typeof config[k] == "boolean")
+		{
+			recipe += k+'='+config[k]+'<br>';
+		}
+		else if ($.isArray(config[k]))
+		{
+			recipe += k+"=(";
+
+			for (let i = 0; i < config[k].length; i++)
+			{
+				recipe += '"'+config[k][i]+'"';
+
+				if (i != config[k].length-1)
+					recipe += " ";
+			}
+
+			recipe += ")<br>";
+		}
+		else
+		{
+			recipe += k+'="'+config[k]+'"<br>';
+		}
+	}
 
 	/* Write the recipe contents. */
 	$("#recipe-body").html(recipe);
