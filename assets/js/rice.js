@@ -131,7 +131,12 @@ function assertions(config)
 		}
 	}
 
-	/* TODO: Special case: home remainder/size. */
+	/* Special case: home remainder/size. If not using remainder, size must be defined. */
+	if (config["SIZE_HOME_REMAINDER"] == false && config["SIZE_HOME"] == "")
+	{
+		$('<span class="required-notice">Error: required.</span>').insertAfter($("label[for='s_size_home']"));
+		passed = false;
+	}
 
 	/* If not passed, scroll up to the first unsatisfied item. */
 	if (passed == false)
