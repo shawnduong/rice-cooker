@@ -96,6 +96,7 @@ export function cook()
 /* Assert that all the required data is filled out. */
 function assertions(config)
 {
+	let passed = true;
 	let required = {
 		"USERNAME": $("label[for='s_username']"),
 		"HOSTNAME": $("label[for='s_hostname']"),
@@ -126,8 +127,15 @@ function assertions(config)
 		if (config[k] == null || config[k] == "")
 		{
 			$('<span class="required-notice">Error: required.</span>').insertAfter(required[k]);
+			passed = false;
 		}
 	}
 
 	/* TODO: Special case: home remainder/size. */
+
+	/* If not passed, scroll up to the first unsatisfied item. */
+	if (passed == false)
+		$(".required-notice")[0].scrollIntoView({ behavior: "smooth", block: "center" });
+
+	return passed;
 }
