@@ -2,7 +2,7 @@
 
 import { val_num } from "./validation.js";
 import { populate_forms } from "./form_population.js";
-import { config_import, config_import_close } from "./config_import.js";
+import { config_import_open, config_import_close, config_import } from "./config_import.js";
 import
 {
 	preset_locality,
@@ -38,8 +38,9 @@ function document_ready()
 /* Import saved configuration from text. */
 function import_config()
 {
-	$("#import-config").click(function(){ config_import() });
+	$("#import-config").click(function(){ config_import_open() });
 	$("#import-menu-bar-close").click(function(){ config_import_close() });
+	$("#import-button").click(function() { config_import() });
 }
 
 /* Validate inputs. */

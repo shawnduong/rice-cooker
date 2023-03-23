@@ -231,10 +231,6 @@ hr {
 	border-top: none;
 }
 
-#import-recipe-container {
-	height: 100%;
-}
-
 #import-recipe {
 	font-family: monospace;
 	width: calc(100% - 24px);
