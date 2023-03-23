@@ -2,6 +2,7 @@
 
 import { val_num } from "./validation.js";
 import { populate_forms } from "./form_population.js";
+import { config_import, config_import_close } from "./config_import.js";
 import
 {
 	preset_locality,
@@ -19,6 +20,7 @@ import { handle_none, cook } from "./rice.js";
 export function start_listeners()
 {
 	document_ready();
+	import_config();
 	input_validation();
 	locality_presetting();
 	partition_presetting();
@@ -31,6 +33,13 @@ export function start_listeners()
 function document_ready()
 {
 	$(document).ready(function(){ populate_forms(); });
+}
+
+/* Import saved configuration from text. */
+function import_config()
+{
+	$("#import-config").click(function(){ config_import() });
+	$("#import-menu-bar-close").click(function(){ config_import_close() });
 }
 
 /* Validate inputs. */

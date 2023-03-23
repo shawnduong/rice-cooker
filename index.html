@@ -48,7 +48,7 @@
 		<p><i>Quickly and effortlessly generate complete custom Arch Linux installation scripts.</i></p>
 		<p>Check the project out on <a id="gh-link" href="https://github.com/shawnduong/rice-cooker" target="_blank">GitHub</a>!</p>
 
-		<button onclick="alert('Not implemented')">Import Saved Configuration</button>
+		<button id="import-config">Import Saved Configuration</button>
 
 	</div>
 
@@ -432,7 +432,7 @@
 			<label for="s_omurice">Additionally install Omurice, the post-installation config switcher.</label>
 			<br><br>
 
-			<button id="submit-button">Cook!</button>
+			<button id="submit-button" class="button button-raise">Cook!</button>
 
 		</div>
 
@@ -445,11 +445,26 @@
 
 		</div>
 
-		<div id="help-menu" class="hidden">
-			<div id="help-menu-bar">
-				<p id="help-menu-bar-title"></p><img id="help-menu-bar-close" src="/assets/svg/exit-icon.svg"/>
+		<div id="help-menu" class="hidden menu">
+			<div class="menu-bar">
+				<p id="help-menu-bar-title" class="menu-bar-title"></p><img id="help-menu-bar-close" class="menu-bar-close" src="/assets/svg/exit-icon.svg"/>
 			</div>
-			<div id="help-menu-body">
+			<div id="help-menu-body" class="menu-body">
+			</div>
+		</div>
+
+		<div id="overlay" class="hidden"></div>
+
+		<div id="import-menu" class="hidden menu">
+			<div id="import-menu-bar" class="menu-bar">
+				<p id="import-menu-bar-title" class="menu-bar-title">Import Saved Configuration</p><img id="import-menu-bar-close" class="menu-bar-close" src="/assets/svg/exit-icon.svg"/>
+			</div>
+			<div id="import-menu-body" class="menu-body">
+				<form id="import-recipe-container">
+					<b>Recipe:</b><br>
+					<textarea id="import-recipe" name="import-recipe" rows=24></textarea>
+					<button id="import-button" class="button">Import!</button>
+				</form>
 			</div>
 		</div>
 
