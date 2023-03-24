@@ -131,6 +131,28 @@ export function copy_recipe()
 	}, 2500);
 }
 
+/* Handle what happens when "Download Full Install Script" is selected. */
+export function download_script()
+{
+	let text = $("#recipe-body").clone().find("br").prepend("\n").end().text();
+
+	$.get("/script/rice-cooker.sh", function (d)
+	{
+		let script = d.replace("%% recipe %%", text);
+		let dl = document.createElement("a");
+		document.body.appendChild(dl);
+		dl.href = "data:text/plain;charset=utf-8," + encodeURIComponent(script);
+		dl.target = "_blank";
+		dl.download = "rice-cooker.sh";
+		dl.click();
+	});
+
+	$("#download-button").text("Download Starting...");
+	setTimeout(() => {
+		$("#download-button").text("Download Full Install Script");
+	}, 2500);
+}
+
 /* Assert that all the required data is filled out. */
 function assertions(config)
 {

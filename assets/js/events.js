@@ -14,7 +14,7 @@ from "./form_presetting.js";
 import { recommend_disk } from "./recommendations.js";
 import { handle_intel, handle_amd, handle_nvidia, handle_none_drivers } from "./drivers.js";
 import { help, help_close } from "./help.js";
-import { handle_none, cook, copy_recipe } from "./rice.js";
+import { handle_none, cook, copy_recipe, download_script } from "./rice.js";
 
 /* Start all listeners. */
 export function start_listeners()
@@ -28,6 +28,7 @@ export function start_listeners()
 	help_menu();
 	rice();
 	copy();
+	download();
 }
 
 /* Upon document ready, populate forms. */
@@ -110,4 +111,10 @@ function rice()
 function copy()
 {
 	$("#copy-button").click(function() { copy_recipe(); });
+}
+
+/* Handle "Download Full Install Script" from rice section. */
+function download()
+{
+	$("#download-button").click(function() { download_script(); });
 }
