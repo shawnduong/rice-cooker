@@ -117,6 +117,20 @@ export function cook()
 	$("#cook-scrollto")[0].scrollIntoView({ behavior: "smooth" });
 }
 
+/* Handle what happens when "Copy to Clipboard" is selected. */
+export function copy_recipe()
+{
+	let text = $("#recipe-body").clone().find("br").prepend("\n").end().text();
+	let temp = $("<textarea>").appendTo("body").val(text).select();
+	document.execCommand("copy");
+	temp.remove();
+
+	$("#copy-button").text("Copied!");
+	setTimeout(() => {
+		$("#copy-button").text("Copy to Clipboard");
+	}, 2500);
+}
+
 /* Assert that all the required data is filled out. */
 function assertions(config)
 {

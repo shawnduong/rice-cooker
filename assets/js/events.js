@@ -14,7 +14,7 @@ from "./form_presetting.js";
 import { recommend_disk } from "./recommendations.js";
 import { handle_intel, handle_amd, handle_nvidia, handle_none_drivers } from "./drivers.js";
 import { help, help_close } from "./help.js";
-import { handle_none, cook } from "./rice.js";
+import { handle_none, cook, copy_recipe } from "./rice.js";
 
 /* Start all listeners. */
 export function start_listeners()
@@ -27,6 +27,7 @@ export function start_listeners()
 	display_driver_toggling();
 	help_menu();
 	rice();
+	copy();
 }
 
 /* Upon document ready, populate forms. */
@@ -102,5 +103,11 @@ function rice()
 	$("#s_lockscreen").change(function() { handle_none(this, "#lockscreen-toggle", "#s_lockscreen_config", "#s_lockscreen_config_script"); });
 	$("#s_wallpaper").change(function() { handle_none(this, "#wallpaper-toggle", "#s_wallpaper_config", "#s_wallpaper_config_script"); });
 	$("#s_browser").change(function() { handle_none(this, "#browser-toggle", "#s_browser_config", "#s_browser_config_script"); });
-	$("#submit-button").click(function() { cook() });
+	$("#submit-button").click(function() { cook(); });
+}
+
+/* Handle "Copy to Clipboard" from rice section. */
+function copy()
+{
+	$("#copy-button").click(function() { copy_recipe(); });
 }
