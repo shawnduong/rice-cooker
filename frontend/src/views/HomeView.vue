@@ -1,9 +1,13 @@
 <script setup lang="ts">
 	import Header from "../components/Header/Header.vue"
-	import Form from "../components/Form/Form.vue"
+	import Personal from "../components/Form/Personal.vue"
+	import Finish from "../components/Finish/Finish.vue"
 </script>
 
 <template>
 	<Header />
-	<Form />
+	<div id="main">
+		<Personal />
+		<Finish />
+	</div>
 </template>
