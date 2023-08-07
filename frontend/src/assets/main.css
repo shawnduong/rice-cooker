@@ -21,6 +21,12 @@ h2 {
 	color: var(--green);
 }
 
+hr {
+	margin: 40px 0px;
+	border: 1px solid var(--pink);
+	border-radius: 5px;
+}
+
 input {
 	margin: 10px 0px;
 	padding: 10px;

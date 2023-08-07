@@ -7,7 +7,7 @@
 <template>
 	<Header />
 	<div id="main">
-		<Personal />
+		<Personal /><hr>
 		<Finish />
 	</div>
 </template>
