@@ -1,0 +1,30 @@
+:root {
+	--background:  #F5F5DC;
+	--foreground:  #59473A;
+	--red:         #BD4B4B;
+	--pink:        #E79D9D;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	background-color: var(--background);
+	font-family: "Poppins", sans-serif;
+	color: var(--foreground);
+}
+
+.big-button {
+	padding: 10px 20px;
+	font-family: "Poppins", sans-serif;
+	font-weight: 600;
+	border-width: 0;
+	border-radius: 20px;
+	background-color: #688B58;
+	color: white;
+	filter: drop-shadow(0px 0px 30px rgba(240, 177, 118, 0.7));
+	transition-duration: 0.4s;
+}
+
+.big-button:hover {
+	transform: scale(1.2);
+}
