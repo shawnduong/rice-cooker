@@ -18,25 +18,27 @@ primary()
 	get_format_device
 	device="$ret"
 
-	# Make the passwords.
+	# Send the device to format to the tertiary.
+	tmux send-keys -t 2 "$device" Enter
+
+	# Make the encryption key.
 	get_password "\n\n Please create an encryption key."
 	encKey="$ret"
+	# Send the encryption key to the tertiary.
+	tmux send-keys -t 2 "$encKey" Enter
+
+	# Make the passwords.
 	get_password "\n\n Please create a root account password."
 	rootPass="$ret"
 	get_password "\n\n Please create a user account password."
 	userPass="$ret"
 
-	# Send the device to format to the tertiary.
-	tmux send-keys -t 2 "$device" Enter
+	clear
 
-	echo -e "\n\n Status"
+	echo -e "\n Status"
 	check 2000 "   Enabling NTP             "
 	check 3000 "   Partitioning disk        "
 	check 3001 "   Formatting boot          "
-
-	# Send the encryption key to the tertiary.
-	sleep 1
-	tmux send-keys -t 2 "$encKey" Enter
 
 	check 3002 "   Formatting lvm           "
 	check 3003 "   Partitioning lvm         "
