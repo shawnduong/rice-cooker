@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source setup.conf
 source modules/precheck/check_connectivity.sh
 source modules/precheck/check_efi.sh
 source modules/common/confirm.sh

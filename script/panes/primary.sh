@@ -1,12 +1,51 @@
 #!/bin/bash
 
+source modules/common/checks.sh
+source modules/common/get_password.sh
+source modules/primary/get_format_device.sh
+
 # Primary controller terminal. This is the left terminal. All flags originating
 # from this terminal are 1xxx.
 primary()
 {
+	clear
+
 	# Start the scripts on the secondary and tertiary terminals.
 	tmux send-keys -t 1 "bash panes/secondary.sh" Enter
 	tmux send-keys -t 2 "bash panes/tertiary.sh" Enter
+
+	# Get the device to format.
+	get_format_device
+	device="$ret"
+
+	# Make the passwords.
+	get_password "\n\n Please create an encryption key."
+	encKey="$ret"
+	get_password "\n\n Please create a root account password."
+	rootPass="$ret"
+	get_password "\n\n Please create a user account password."
+	userPass="$ret"
+
+	# Send the device to format to the tertiary.
+	tmux send-keys -t 2 "$device" Enter
+
+	echo -e "\n\n Status"
+	check 2000 "   Enabling NTP             "
+	check 3000 "   Partitioning disk        "
+	check 3001 "   Formatting boot          "
+
+	# Send the encryption key to the tertiary.
+	sleep 1
+	tmux send-keys -t 2 "$encKey" Enter
+
+	check 3002 "   Formatting lvm           "
+	check 3003 "   Partitioning lvm         "
+	check 3004 "   Making swap              "
+	check 3005 "   Formatting root          "
+	check 3006 "   Formatting home          "
+	check 3007 "   Mounting partitions      "
+	check 3008 "   Enabling swap            "
+	check 3009 "   Installing packages      "
 }
 
 primary
