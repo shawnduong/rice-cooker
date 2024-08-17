@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source modules/common/checks.sh
+source modules/common/flag.sh
 source modules/common/get_password.sh
 source modules/primary/get_format_device.sh
 
@@ -25,6 +26,7 @@ primary()
 	get_password "\n\n Please create an encryption key."
 	encKey="$ret"
 	# Send the encryption key to the tertiary.
+	check_silent 3001
 	tmux send-keys -t 2 "$encKey" Enter
 
 	# Make the passwords.
@@ -39,7 +41,6 @@ primary()
 	check 2000 "   Enabling NTP             "
 	check 3000 "   Partitioning disk        "
 	check 3001 "   Formatting boot          "
-
 	check 3002 "   Formatting lvm           "
 	check 3003 "   Partitioning lvm         "
 	check 3004 "   Making swap              "
@@ -48,6 +49,24 @@ primary()
 	check 3007 "   Mounting partitions      "
 	check 3008 "   Enabling swap            "
 	check 3009 "   Installing packages      "
+
+	# Signal to the secondary to continue.
+	flag 1000
+
+	check 2001 "   Generating fstab         "
+
+	# Send keys to secondary, which has already chrooted to the new install, to
+	# start the secondary_chroot script.
+	sleep 1
+	tmux send-keys -t 1 "cd /root/setup/ && bash panes/secondary_chroot.sh" Enter
+
+	# Signal the tertiary to chroot to the new install.
+	flag 1001
+
+	# Send keys to tertiary, which has already chrooted to the new install, to
+	# start the tertiary_chroot script.
+	sleep 1
+	tmux send-keys -t 2 "cd /root/setup/ && bash panes/tertiary_chroot.sh" Enter
 }
 
 primary

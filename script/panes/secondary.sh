@@ -28,8 +28,11 @@ secondary()
 
 	# chroot.
 	echo " Chrooting to install... new shell will be spawned."
-	cp /root/rice-cooker.sh /mnt/root/rice-cooker.sh
+	mkdir -p /mnt/root/setup/
+	cp -r ./ /mnt/root/setup/
 	arch-chroot /mnt  # Flags [2002,2011],2050
+	# At this point, the primary terminal will send keys over to the chrooted
+	# pane to start secondary_chroot.sh. When it exits, it'll return here.
 
 	# Signal that secondary has successfully exited chroot.
 	echo -e "\033[0;33m ==[ EXITING CHROOT ]== \033[0;0m"
