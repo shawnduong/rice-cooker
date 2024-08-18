@@ -8,7 +8,8 @@ source modules/secondary_chroot/set_root_login.sh
 source modules/secondary_chroot/set_timezone.sh
 source modules/secondary_chroot/sync_hwclock.sh
 
-# Secondary terminal, within the chroot. Flags from [2002,2011],2050.
+# Secondary terminal, within the chroot. Flags start at 2002 and may go up to
+# 2049. Flags 2050 when done.
 secondary_chroot()
 {
 	# Signal that we're chrooted.
@@ -20,35 +21,9 @@ secondary_chroot()
 	make_user_account  # Flags 2005 to signal ready to receive password, 2006 done.
 	set_timezone       # Flags 2007.
 	sync_hwclock       # Flags 2008.
+	set_hostname       # Flags 2009.
+	update_hosts       # Flags 2010.
 
-#	# Set the hostname.
-#	echo -n " Setting hostname..."
-#	echo "$HOSTNAME" > /etc/hostname
-#	echo " done."
-#	flag 2005
-#
-#	# Add localhost to hosts.
-#	echo -n " Adding localhost self to hosts..."
-#	echo "" >> /etc/hosts
-#	echo "127.0.0.1  $HOSTNAME.net  $HOSTNAME" >> /etc/hosts
-#	echo "::1        $HOSTNAME.net  $HOSTNAME" >> /etc/hosts
-#	echo " done."
-#	flag 2006
-#
-#	# Generate locale.
-#	echo -n " Generating locale..."
-#	echo "$LOCALE" >> /etc/locale.gen
-#	locale-gen &>/dev/null
-#	flag 2007
-#	echo " done."
-#
-#	# Update mkinitcpio hooks.
-#	echo -n " Creating initial ramdisk..."
-#	cat /etc/mkinitcpio.conf | sed -e "s/^HOOKS=.*/HOOKS=(base udev autodetect modconf block keyboard encrypt lvm2 filesystems fsck)/" > /tmp/buffer
-#	mv /tmp/buffer /etc/mkinitcpio.conf
-#	mkinitcpio -p linux &>/dev/null
-#	echo " done."
-#
 #	# Get the device from the controller.
 #	read -r -p " Awaiting device from controller... " device
 #	flag 2010
@@ -57,6 +32,8 @@ secondary_chroot()
 #
 #	# Flag controller to pull secondary out of chroot.
 #	flag 2050
+
+	sleep 5  # debug
 }
 
 secondary_chroot
