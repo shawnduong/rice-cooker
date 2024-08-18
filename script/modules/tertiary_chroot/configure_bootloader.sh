@@ -11,10 +11,10 @@ configure_bootloader()
 
 	echo -n " Configuring bootloader..."
 
-	if [[ "$1" == "nvme*" ]]; then
-		devLvm="/dev/${1}p2"
+	if [[ "$device" == "nvme*" ]]; then
+		devLvm="/dev/${device}p2"
 	else
-		devLvm="/dev/${1}2"
+		devLvm="/dev/${device}2"
 	fi
 
 	uuid=$(blkid "$devLvm" | cut -d '"' -f 2)
