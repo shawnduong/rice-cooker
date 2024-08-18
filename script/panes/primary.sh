@@ -59,6 +59,19 @@ primary()
 	flag 1001                 # then tell the tertiary to chroot.
 
 	check_chroot 3010 "   chrooting into install   "
+
+	# Send the root password to the secondary.
+	check_chroot_silent 2003
+	tmux send-keys -t 1 "$rootPass" Enter
+	check_chroot 2004 "   Setting root password    "
+
+	# Send the user password to the secondary.
+	check_chroot_silent 2005
+	tmux send-keys -t 1 "$userPass" Enter
+	check_chroot 2006 "   Creating user account    "
+
+	check_chroot 2007 "   Setting timezone         "
+	check_chroot 2008 "   Syncing hardware clock   "
 }
 
 primary

@@ -10,8 +10,8 @@ tertiary()
 {
 	clear
 
-	prepare_device              # Flags [3000,3008]
-	install_essential_packages  # Flags 3009
+	prepare_device              # Flags [3000,3008].
+	install_essential_packages  # Flags 3009.
 	check_and_chroot            # Checks 1001. Flags start at 3010 and may go
 	                            # up to 3049. 3050 is flagged when done.
 	# We're all done.

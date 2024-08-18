@@ -3,6 +3,10 @@
 source setup.conf
 source modules/common/checks.sh
 source modules/common/flag.sh
+source modules/secondary_chroot/make_user_account.sh
+source modules/secondary_chroot/set_root_login.sh
+source modules/secondary_chroot/set_timezone.sh
+source modules/secondary_chroot/sync_hwclock.sh
 
 # Secondary terminal, within the chroot. Flags from [2002,2011],2050.
 secondary_chroot()
@@ -11,20 +15,12 @@ secondary_chroot()
 	flag 2002
 
 	echo -e "\033[0;33m ==[ NOW RUNNING CHROOTED ]== \033[0;0m"
-	sleep 1
 
-#	# Set the timezone.
-#	echo -n " Setting timezone..."
-#	ln -sf "/usr/share/zoneinfo/$TIMEZONE" /etc/localtime
-#	echo " done."
-#	flag 2003
-#
-#	# Synchronize the hardware clock.
-#	echo -n " Synchronizing hardware clock..."
-#	hwclock --systohc
-#	echo " done."
-#	flag 2004
-#
+	set_root_login     # Flags 2003 to signal ready to receive password, 2004 done.
+	make_user_account  # Flags 2005 to signal ready to receive password, 2006 done.
+	set_timezone       # Flags 2007.
+	sync_hwclock       # Flags 2008.
+
 #	# Set the hostname.
 #	echo -n " Setting hostname..."
 #	echo "$HOSTNAME" > /etc/hostname
@@ -52,17 +48,6 @@ secondary_chroot()
 #	mv /tmp/buffer /etc/mkinitcpio.conf
 #	mkinitcpio -p linux &>/dev/null
 #	echo " done."
-#	stty -echo
-#	flag 2008
-#
-#	# Set the root password.
-#	read -r -p " Awaiting root password from controller..." rootPass
-#	echo " [hidden]"
-#	stty echo
-#	echo -n " Setting root password..."
-#	echo -ne "${rootPass}\n${rootPass}" | passwd &>/dev/null
-#	echo " done."
-#	flag 2009
 #
 #	# Get the device from the controller.
 #	read -r -p " Awaiting device from controller... " device

@@ -13,12 +13,12 @@ secondary()
 	clear
 	suppress_systemd
 
-	enable_ntp        # Flags 2000
+	enable_ntp        # Flags 2000.
 
 	# Wait for the signal from the controller to continue.
 	check_silent 1000
 
-	gen_fstab         # Flags 2001
+	gen_fstab         # Flags 2001.
 	copy_and_chroot   # Flags start at 2002 and may go up to 2049. 2050 when done.
 
 	# We're all done.

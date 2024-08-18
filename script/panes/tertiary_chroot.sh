@@ -13,23 +13,6 @@ tertiary_chroot()
 	echo -e "\033[0;33m ==[ NOW RUNNING CHROOTED ]== \033[0;0m"
 	sleep 1
 
-#	# Get the password.
-#	stty -echo
-#	flag 3011
-#	read -r -p " Awaiting user password from controller..." password
-#	echo " [hidden]"
-#	stty echo
-#	flag 3012
-#
-#	# Create sudo user.
-#	echo -n " Creating sudo user..."
-#	useradd -m -G wheel "$USERNAME"
-#	echo -ne "${password}\n${password}" | passwd "$USERNAME" &>/dev/null
-#	cat /etc/sudoers | sed -e "s/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/" > /tmp/buffer
-#	mv /tmp/buffer /etc/sudoers
-#	echo " done."
-#	flag 3013
-#
 #	# Install WM/DE, fonts, and X.
 #	install_user_packages  # Flags 3014
 #	cat /etc/sudoers | sed -e "s/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/" > /tmp/buffer
