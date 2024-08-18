@@ -2,7 +2,7 @@ source setup.conf
 source modules/common/flag.sh
 
 # Update /etc/hosts. Flags 2010.
-set_hostname()
+update_hosts()
 {
 	echo -n " Adding localhost self to hosts..."
 	echo "" >> /etc/hosts

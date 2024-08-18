@@ -19,6 +19,9 @@ tertiary_chroot()
 	generate_locale       # Flags 3011.
 	generate_ramdisk      # Flags 3012.
 	configure_bootloader  # Flags 3013 to signal ready to receive device, 3014 done.
+
+	# Wait for the signal to exit chroot.
+	check 1002
 }
 
 tertiary_chroot

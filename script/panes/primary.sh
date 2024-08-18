@@ -83,6 +83,9 @@ primary()
 
 	check_chroot 3014 "   Configuring bootloader   "
 
+	flag_chroot 1002
+	flag_chroot 1003
+
 	echo "\nBase install complete. Rebooting now."
 	sleep 3
 	reboot

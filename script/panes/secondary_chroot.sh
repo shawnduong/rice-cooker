@@ -25,6 +25,9 @@ secondary_chroot()
 	sync_hwclock       # Flags 2008.
 	set_hostname       # Flags 2009.
 	update_hosts       # Flags 2010.
+
+	# Wait for the signal to exit chroot.
+	check 1003
 }
 
 secondary_chroot

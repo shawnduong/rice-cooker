@@ -5,3 +5,9 @@ flag()
 {
 	touch "/tmp/$1"
 }
+
+# Same as above, but from non-chroot to chroot.
+flag_chroot()
+{
+	touch "/mnt/tmp/$1"
+}
