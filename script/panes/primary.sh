@@ -55,18 +55,10 @@ primary()
 
 	check 2001 "   Generating fstab         "
 
-	# Send keys to secondary, which has already chrooted to the new install, to
-	# start the secondary_chroot script.
-	sleep 1
-	tmux send-keys -t 1 "cd /root/setup/ && bash panes/secondary_chroot.sh" Enter
+	check_chroot_silent 2002  # Wait for the secondary to chroot,
+	flag 1001                 # then tell the tertiary to chroot.
 
-	# Signal the tertiary to chroot to the new install.
-	flag 1001
-
-	# Send keys to tertiary, which has already chrooted to the new install, to
-	# start the tertiary_chroot script.
-	sleep 1
-	tmux send-keys -t 2 "cd /root/setup/ && bash panes/tertiary_chroot.sh" Enter
+	check_chroot 3010 "   chrooting into install   "
 }
 
 primary

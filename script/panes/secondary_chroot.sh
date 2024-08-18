@@ -7,11 +7,12 @@ source modules/common/flag.sh
 # Secondary terminal, within the chroot. Flags from [2002,2011],2050.
 secondary_chroot()
 {
-	echo "foo"
-#	flag 2002
-#
-#	echo -e "\033[0;33m ==[ NOW RUNNING CHROOTED ]== \033[0;0m"
-#
+	# Signal that we're chrooted.
+	flag 2002
+
+	echo -e "\033[0;33m ==[ NOW RUNNING CHROOTED ]== \033[0;0m"
+	sleep 1
+
 #	# Set the timezone.
 #	echo -n " Setting timezone..."
 #	ln -sf "/usr/share/zoneinfo/$TIMEZONE" /etc/localtime

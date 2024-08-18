@@ -1,3 +1,4 @@
+source setup.conf
 source modules/common/flag.sh
 
 # Partition, format, mount, etc. the device. Flags from [3000,3008].

@@ -7,11 +7,12 @@ source modules/common/flag.sh
 # Tertiary terminal, within the chroot. Flags [3010,3015],3050.
 tertiary_chroot()
 {
-	echo "bar"
-#	flag 3010
-#
-#	echo -e "\033[0;33m ==[ NOW RUNNING CHROOTED ]== \033[0;0m"
-#
+	# Signal that we're chrooted.
+	flag 3010
+
+	echo -e "\033[0;33m ==[ NOW RUNNING CHROOTED ]== \033[0;0m"
+	sleep 1
+
 #	# Get the password.
 #	stty -echo
 #	flag 3011
