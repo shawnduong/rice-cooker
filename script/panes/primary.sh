@@ -76,6 +76,16 @@ primary()
 	check_chroot 2010 "   Updating /etc/hosts      "
 	check_chroot 3011 "   Generating locale        "
 	check_chroot 3012 "   Making initial ramdisk   "
+
+	# Send the device to the tertiary.
+	check_chroot_silent 3013
+	tmux send-keys -t 2 "$device" Enter
+
+	check_chroot 3014 "   Configuring bootloader   "
+
+	echo "\nBase install complete. Rebooting now."
+	sleep 3
+	reboot
 }
 
 primary

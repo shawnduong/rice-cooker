@@ -23,17 +23,6 @@ secondary_chroot()
 	sync_hwclock       # Flags 2008.
 	set_hostname       # Flags 2009.
 	update_hosts       # Flags 2010.
-
-#	# Get the device from the controller.
-#	read -r -p " Awaiting device from controller... " device
-#	flag 2010
-#
-#	configure_bootloader "$device"  # Flags 2011
-#
-#	# Flag controller to pull secondary out of chroot.
-#	flag 2050
-
-	sleep 5  # debug
 }
 
 secondary_chroot
