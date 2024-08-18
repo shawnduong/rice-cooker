@@ -3,6 +3,9 @@
 source setup.conf
 source modules/common/checks.sh
 source modules/common/flag.sh
+source modules/tertiary_chroot/generate_locale.sh
+source modules/tertiary_chroot/generate_ramdisk.sh
+source modules/tertiary_chroot/configure_bootloader.sh
 
 # Tertiary terminal, within the chroot. Flags start at 3010 and may go up to
 # 3049. Flags 3050 when done.

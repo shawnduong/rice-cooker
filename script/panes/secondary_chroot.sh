@@ -7,6 +7,8 @@ source modules/secondary_chroot/make_user_account.sh
 source modules/secondary_chroot/set_root_login.sh
 source modules/secondary_chroot/set_timezone.sh
 source modules/secondary_chroot/sync_hwclock.sh
+source modules/secondary_chroot/set_hostname.sh
+source modules/secondary_chroot/update_hosts.sh
 
 # Secondary terminal, within the chroot. Flags start at 2002 and may go up to
 # 2049. Flags 2050 when done.
