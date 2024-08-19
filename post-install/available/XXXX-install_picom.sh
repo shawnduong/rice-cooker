@@ -2,4 +2,4 @@
 
 echo " Installing picom..."
 pacman -S --noconfirm picom
-echo " done."
+echo " picom installed."

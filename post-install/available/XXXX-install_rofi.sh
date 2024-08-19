@@ -2,4 +2,4 @@
 
 echo " Installing rofi..."
 pacman -S --noconfirm rofi
-echo " done."
+echo " rofi installed."

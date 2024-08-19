@@ -2,4 +2,4 @@
 
 echo " Installing polybar..."
 pacman -S --noconfirm polybar
-echo " done."
+echo " polybar installed."
