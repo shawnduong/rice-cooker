@@ -9,7 +9,7 @@ install_essential_packages()
 	echo -e " Installing essential packages... this may take a while."
 	echo -e " \033[0;33m===[ PACKAGE INSTALLATION LOGS ]====\033[0;0m"
 
-	pacstrap /mnt base base-devel linux linux-firmware lvm2 networkmanager vim
+	pacstrap /mnt base base-devel linux linux-firmware lvm2 networkmanager vim gnu-netcat
 	status="$?"
 
 	echo -e " \033[0;33m====================================\033[0;0m"
