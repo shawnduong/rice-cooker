@@ -1,3 +1,5 @@
 #!/bin/bash
 
-pacman -S mesa
+echo "Installing Intel display drivers..."
+pacman -S --noconfirm mesa
+echo "Intel display drivers installed."

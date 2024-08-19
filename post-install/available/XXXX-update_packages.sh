@@ -1,3 +1,5 @@
 #!/bin/bash
 
-pacman -Syu
+echo "Updating packages..."
+pacman -Syu --noconfirm
+echo "Package updated."
