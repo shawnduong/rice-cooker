@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo " Installing prerequisite packages..."
-pacman -S --noconfirm xorg xorg-init i3-wm
+pacman -S --noconfirm xorg xorg-xinit i3-wm
 echo " Prerequisite packages installed."
 
 echo " Configuring X to auto-start i3..."
