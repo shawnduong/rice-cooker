@@ -3,8 +3,9 @@
 copy_and_chroot()
 {
 	# Copy the script to the new root.
-	mkdir -p /mnt/root/setup/
+	mkdir -p /mnt/root/setup/ /mnt/root/post-install/
 	cp -r ./ /mnt/root/setup/
+	cp -r ../post-install/* /mnt/root/post-install/
 
 	# chroot. Flags start at 2002, may go up to 2049. 2050 when done.
 	echo " Chrooting to install... new shell will be spawned."
