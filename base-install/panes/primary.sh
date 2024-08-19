@@ -74,6 +74,7 @@ primary()
 	check_chroot 2008 "   Syncing hardware clock   "
 	check_chroot 2009 "   Setting hostname         "
 	check_chroot 2010 "   Updating /etc/hosts      "
+	check_chroot 2011 "   Enabling network         "
 	check_chroot 3011 "   Generating locale        "
 	check_chroot 3012 "   Making initial ramdisk   "
 
