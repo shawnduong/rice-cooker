@@ -1,8 +1,10 @@
 #!/bin/bash
 
 echo " Installing prerequisite packages..."
-pacman -S --noconfirm xorg xorg-xinit i3-wm
+pacman -S --noconfirm xorg xorg-xinit xterm i3
 echo " Prerequisite packages installed."
+
+username="$(cat /etc/passwd | grep /home/ | awk -F ':' '{print $1}')"
 
 echo -n " Configuring X to auto-start i3..."
 echo "exec i3" > /home/$username/.xinitrc
@@ -10,7 +12,6 @@ echo " done."
 
 echo -n " Configuring Bash shell to automatically start X..."
 
-username="$(cat /etc/passwd | grep /home/ | awk -F ':' '{print $1}')"
 echo "#"                                         > /home/$username/.bash_profile
 echo "# ~/.bash_profile"                        >> /home/$username/.bash_profile
 echo "#"                                        >> /home/$username/.bash_profile
