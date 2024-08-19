@@ -46,11 +46,19 @@ main()
 		echo $module | awk -F '/' '{printf "   %s\n", $3}'
 	done
 
-	if confirm "Ready to install?"; then
-		echo -e "\n Starting installation."
+	echo ""
+
+	if confirm "Ready to run?"; then
+		echo -e "\n Starting config."
 	else
 		end " Aborting installation."
 	fi
+
+	for module in ./enabled/*.sh; do
+		shortname=$(echo $module | awk -F '/' '{print $3}')
+		echo -e "\n---[ $shortname ]---"
+		bash $module
+	done
 }
 
 main
