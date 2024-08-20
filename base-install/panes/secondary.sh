@@ -6,6 +6,7 @@ source modules/common/suppress_systemd.sh
 source modules/secondary/enable_ntp.sh
 source modules/secondary/gen_fstab.sh
 source modules/secondary/copy_and_chroot.sh
+source modules/secondary/cleanup.sh
 
 # Secondary quick-task terminal.
 secondary()
@@ -20,6 +21,7 @@ secondary()
 
 	gen_fstab         # Flags 2001.
 	copy_and_chroot   # Flags start at 2002 and may go up to 2049. 2050 when done.
+	cleanup           # Flags 2051.
 
 	# We're all done.
 	flag 2100

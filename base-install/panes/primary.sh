@@ -87,6 +87,8 @@ primary()
 	flag_chroot 1002
 	flag_chroot 1003
 
+	check 2051 "   Cleaning up setup files  "
+
 	echo -e "\nBase install complete. Rebooting now."
 	sleep 3
 	reboot
