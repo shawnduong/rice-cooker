@@ -15,7 +15,7 @@ echo " Prerequisite packages installed."
 username="$(cat /etc/passwd | grep /home/ | awk -F ':' '{print $1}')"
 
 echo " Installing packages..."
-pacman -S --noconfirm picom polybar rofi unclutter xclip feh
+pacman -S --noconfirm picom polybar rofi unclutter xclip feh scrot flameshot
 echo " packages installed."
 
 echo -n " Configuring X to auto-start i3..."
@@ -87,8 +87,19 @@ cp "/home/$username/sh/programs/st-flexipatch/st/st" "/usr/local/bin/"
 chmod 755 "/usr/local/bin/st"
 echo " st installed."
 
+echo " Installing i3lock-color..."
+pacman -Rs --noconfirm i3lock
+sudo su $username bash -c "yay -S --noconfirm i3lock-color"
+echo " i3lock-color installed."
+
 echo "A few notes:"
 echo " - You may need to edit the polybar config and specify where your heat sensor is"
 echo "   as well as what network interface to monitor."
 echo " - Open up vim and run :PlugInstall. The color plugin won't work until then."
+echo " - If your system supports it, enable picom in the i3 config."
 echo " - If you have dual monitors, lock a workspace to it in the i3 config."
+echo " - If you have dual monitors, kill polybar and any other program and take a full"
+echo "   screenshot with scrot. Name this 'wallpaper_combined' and put it in"
+echo "   ~/sh/wallpapers. This will show the wallpaper when you lock the computer."
+echo " - The lockscreen is made for 1920x1080 screens. You may need to tweak it for"
+echo "   other size screens."

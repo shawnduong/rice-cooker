@@ -185,15 +185,16 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-## Print screen binds.
-## Primary monitor.
-#bindsym Print exec --no-startup-id scrot 'scr_%Y%m%d_%H%M%S.png' -e 'convert $f -crop 1920x1080+1080+375 tmp.png && mv tmp.png $f && mv $f ~/pic/screen'
-## Secondary monitor.
-#bindsym Ctrl+Print exec --no-startup-id scrot 'scr_%Y%m%d_%H%M%S.png' -e 'convert $f -crop 1080x1920+0+0 tmp.png && mv tmp.png $f && mv $f ~/pic/screen'
-## All monitors.
-#bindsym Ctrl+Shift+Print exec --no-startup-id scrot 'scr_%Y%m%d_%H%M%S.png' -e 'mv $f ~/pic/screen'
-## Flameshot screen annotation bind.
-#bindsym Shift+Print exec --no-startup-id flameshot gui
-#
+# Print screen binds.
+# Primary monitor.
+bindsym Print exec --no-startup-id scrot 'scr_%Y%m%d_%H%M%S.png' -e 'convert $f -crop 1920x1080+1080+375 tmp.png && mv tmp.png $f && mv $f ~/pic/screen'
+# Secondary monitor.
+bindsym Ctrl+Print exec --no-startup-id scrot 'scr_%Y%m%d_%H%M%S.png' -e 'convert $f -crop 1080x1920+0+0 tmp.png && mv tmp.png $f && mv $f ~/pic/screen'
+# All monitors.
+bindsym Ctrl+Shift+Print exec --no-startup-id scrot 'scr_%Y%m%d_%H%M%S.png' -e 'mv $f ~/pic/screen'
+# Flameshot screen annotation bind.
+bindsym Shift+Print exec --no-startup-id flameshot gui
+
 ## Wacom drawing tablet focus main monitor.
+## Only use this if you have a dual monitor setup with a tablet.
 #bindsym $mod+x exec --no-startup-id xsetwacom set "Wacom One by Wacom S Pen stylus" MapToOutput HDMI1

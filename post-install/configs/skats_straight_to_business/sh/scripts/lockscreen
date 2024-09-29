@@ -1,15 +1,30 @@
 #!/bin/sh
 
-# Lock the desktop.
-# This is for two 1920x1080 screens, one vertical on the left. Not sure if this
-# will work for anyone else.
-i3lock \
-	--image="/home/$USER/pic/wallpapers/wallpaper_combined" --screen=1 \
-	--clock --force-clock --time-pos="x+130:h+300" --date-str "This device is locked." --time-str "%H:%M:%S" \
-	--indicator --ind-pos="x+260:h+300" --radius 20 --ring-width=4 \
-	--ring-color="ffffffff" --ringver-color="ffffffff" --ringwrong-color="ffffffff" \
-	--inside-color="00000000" --insidever-color="00000000" --insidewrong-color="d23c3dff" --line-uses-inside \
-	--keyhl-color="d23c3dff" --bshl-color="d23c3dff" --separator-color="00000000" \
-	--verif-color="ffffffff" --time-color="ffffffff" --date-color="ffffffff" \
-	--verif-text="" --wrong-text="" --noinput-text="" --no-modkey-text \
-	--pass-media-keys --pass-volume-keys
+# Lock the desktop. These are for 1920x1080 screens so you may need to change
+# some offsets and positions for other size screens.
+
+# If 2 monitors, activate the combined wallpaper. This is for two 1920x1080
+# screens, one vertical on the left. Not sure if this will work for anyone else.
+if [ "$(xrandr --listmonitors | grep -c 'Monitors:')" -gt 1 ]; then
+	i3lock \
+		--image="/home/$USER/pic/wallpapers/wallpaper_combined" --screen=1 \
+		--clock --force-clock --time-pos="x+130:h+300" --date-str "This device is locked." --time-str "%H:%M:%S" \
+		--indicator --ind-pos="x+260:h+300" --radius 20 --ring-width=4 \
+		--ring-color="ffffffff" --ringver-color="ffffffff" --ringwrong-color="ffffffff" \
+		--inside-color="00000000" --insidever-color="00000000" --insidewrong-color="d23c3dff" --line-uses-inside \
+		--keyhl-color="d23c3dff" --bshl-color="d23c3dff" --separator-color="00000000" \
+		--verif-color="ffffffff" --time-color="ffffffff" --date-color="ffffffff" \
+		--verif-text="" --wrong-text="" --noinput-text="" --no-modkey-text \
+		--pass-media-keys --pass-volume-keys
+else
+	i3lock \
+		--image="/home/$USER/pic/wallpapers/wallpaper_primary" --screen=1 \
+		--clock --force-clock --time-pos="x+130:h+300" --date-str "This device is locked." --time-str "%H:%M:%S" \
+		--indicator --ind-pos="x+260:h+300" --radius 20 --ring-width=4 \
+		--ring-color="ffffffff" --ringver-color="ffffffff" --ringwrong-color="ffffffff" \
+		--inside-color="00000000" --insidever-color="00000000" --insidewrong-color="d23c3dff" --line-uses-inside \
+		--keyhl-color="d23c3dff" --bshl-color="d23c3dff" --separator-color="00000000" \
+		--verif-color="ffffffff" --time-color="ffffffff" --date-color="ffffffff" \
+		--verif-text="" --wrong-text="" --noinput-text="" --no-modkey-text \
+		--pass-media-keys --pass-volume-keys
+fi
