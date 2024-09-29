@@ -15,7 +15,7 @@ echo " Prerequisite packages installed."
 username="$(cat /etc/passwd | grep /home/ | awk -F ':' '{print $1}')"
 
 echo " Installing packages..."
-pacman -S --noconfirm picom polybar rofi unclutter xclip feh scrot flameshot
+pacman -S --noconfirm picom polybar rofi unclutter xclip feh scrot flameshot xss-lock
 echo " packages installed."
 
 echo -n " Configuring X to auto-start i3..."
