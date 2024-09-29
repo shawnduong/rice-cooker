@@ -1,0 +1,48 @@
+# Only allow running interactively.
+[[ $- != *i* ]] && return
+
+# Use C locale.
+export LANG="C"
+export LC_ALL="C"
+
+# Set the paths.
+export PATH="/home/$USER/sh/scripts:$PATH"
+
+# Set the terminal.
+export TERMINAL="st"
+
+# Terminal prompt.
+export PS1="\[\033[0;32m\][\u@\h:\w] $ \[\033[0;0m\]"
+
+# Override default ls dir color.
+export LS_COLORS="di=1;36:$LS_COLORS"
+
+# Disable Python cache creation.
+export PYTHONDONTWRITEBYTECODE=1
+
+# Enable ls colors by default.
+alias ls="ls --color=auto --group-directories-first"
+
+# Cat with tab size of 4.
+alias cat="tabs 4 && cat"
+
+# Enable grep colors by default.
+alias grep="grep --color"
+
+# Start gdb quietly.
+alias gdb="gdb -q"
+
+# Make a note.
+alias note="vim ~/.note"
+
+# Read notes.
+alias notes="cat ~/.note"
+
+# Disable "Erase is backspace" message and others.
+alias reset="reset -Q"
+
+# Tree without escapes.
+alias tree="tree -N"
+
+# Allow copying to the clipboard from the terminal.
+alias xclip="xclip -selection clipboard"

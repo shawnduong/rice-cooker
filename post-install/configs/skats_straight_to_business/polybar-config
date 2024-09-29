@@ -1,0 +1,150 @@
+; --[ Polybar ]--
+[bar/poly]
+
+; Dimensions.
+width = 100%
+height = 24
+
+; Font information with a vertical offset of 2px.
+font-0 = DejaVu Sans Mono:pixelsize=10:antialias=true:hinting=true;2
+
+; Background/foreground colors.
+background = #0C0A0F
+foreground = #DFDFDF
+
+; Right-hand padding.
+padding-right = 2
+
+; Line color and size.
+line-size = 1
+line-color = #B8F2FE
+
+; Modules ordering.
+modules-left = i3 xwindow
+modules-right = time network cpu ram pulseaudio temperature
+
+; --[ i3 Module ]--
+[module/i3]
+type = internal/i3
+
+; Sort workspaces numerically.
+index-sort = true
+
+; Disable wrapping scroll.
+wrapping-scroll = false
+
+; Format.
+format = <label-state> <label-mode>
+
+; Label mode.
+label-mode = "[ %mode% ] "
+
+; Focused labels.
+label-focused = %index%
+label-focused-background = #444444
+label-focused-foreground = #FFFFFF
+label-focused-padding = 1
+
+; Unfocused labels.
+label-unfocused = %index%
+label-unfocused-background = #0C0A0F
+label-unfocused-foreground = #DFDFDF
+label-unfocused-padding = 1
+
+; Visible labels.
+label-visible = %index%
+label-visible-background = #222222
+label-visible-foreground = #EEEEEE
+label-visible-padding = 1
+
+; Urgent labels.
+label-urgent = %index%
+label-urgent-background = #BD2C40
+label-urgent-padding = 1
+
+; --[ xwindow Module ]--
+[module/xwindow]
+type = internal/xwindow
+
+; Label.
+label = " %title:0:64:...%  "
+
+; Background/foreground color.
+format-background = #0C0A0F
+format-foreground = #FFFFFF
+
+; Refresh rate.
+poll-interval = 5
+
+; Battery fix.
+full-at = 99
+
+; Label.
+label-full = " 100%e"
+label-charging = " %percentage:3:3%%e"
+label-discharging = " %percentage:3:3%%e"
+
+; --[ Temperature Module ]--
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+
+; Source
+; You probably need to find out the path for your own system.
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp1_input
+
+; Formatting fix.
+warn-temperature = 999
+
+; Label.
+label = "HEAT %temperature-c:3:3%"
+
+; -- [ Audio Module ]--
+[module/pulseaudio]
+type = internal/pulseaudio
+
+; Label.
+label-volume = "AUDIO %percentage:3:3%% / "
+label-muted = "AUDIO MUTE / "
+
+; --[ RAM Module ]--
+[module/ram]
+type = internal/memory
+
+; Label.
+label = "RAM %percentage_used:2:2%% / "
+
+; --[ CPU Module ]--
+[module/cpu]
+type = internal/cpu
+
+; Refresh rate.
+interval = 1
+
+; Label.
+label = "CPU %percentage:2:2%% / "
+
+; --[ Network Module ]--
+; Find out the interface from `ip a`
+[module/network]
+type = internal/network
+interface = enp3s0
+
+; Labels.
+label-connected = "%local_ip% / "
+label-disconnected = "OFFLINE / "
+
+; --[ Settings ]--
+screenchange-reload = true
+
+; --[ Time Module ]--
+[module/time]
+type = internal/date
+
+; Refresh rate.
+interval = 1
+
+; Formatting.
+date = "%a %b %d"
+time = "%H:%M:%S"
+label = "%date% %time% / "

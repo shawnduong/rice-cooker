@@ -1,0 +1,199 @@
+#### --[ GENERAL I3 SETTINGS ]-- ####
+
+# Set the mod key to Win.
+set $mod Mod4
+
+# Use Mouse+$mod to drag floating windows to their wanted position.
+floating_modifier $mod
+
+# Window title font.
+font pango:monospace 11
+
+# Setting the gap sizes.
+gaps inner 4
+gaps outer 1
+
+# Set the maximum floating window constraints.
+floating_minimum_size 128x128
+floating_maximum_size 1600x900
+
+# Set a border width.
+for_window [class="^.*"] border pixel 0
+
+# Disable mouse focus.
+focus_follows_mouse no
+
+# Define the names of the workspaces.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+#### --[ PROGRAMS AND UTILITIES ]-- ####
+
+# Start the compositor.
+#This is commented out since it might break the display on some systems and VMs,
+#so manually uncomment this if it works for your system.
+#exec_always --no-startup-id picom -b
+
+# Set the background.
+exec_always --no-startup-id background-set
+
+# Start unclutter.
+exec --no-startup-id unclutter -b
+
+# Enable Polybar.
+exec_always --no-startup-id killall polybar; polybar poly
+
+# Lock before suspension.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- lockscreen --nofork
+
+# Don't auto-sleep.
+exec_always --no-startup-id xset s off
+exec_always --no-startup-id xset -dpms
+exec_always --no-startup-id xset s noblank
+
+#### --[ KEYBINDS ]-- ####
+
+# Use pactl to adjust volume in PulseAudio.
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+# Lock the computer.
+bindsym $mod+ctrl+l exec --no-startup-id lockscreen
+
+# Start a terminal.
+bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
+
+# Start a backup terminal.
+bindsym $mod+t exec --no-startup-id xterm
+
+# Kill the focused window.
+bindsym $mod+Shift+q kill
+
+# Start rofi.
+bindsym $mod+d exec --no-startup-id rofi -show drun
+
+# Change focus using hjkl.
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# Change focus using arrow keys.
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move the focused window using hjkl.
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# Move the focused window using arrow keys.
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Split horizontally.
+bindsym $mod+b split h
+
+# Split vertically.
+bindsym $mod+v split v
+
+# Enter fullscreen mode for the focused container.
+bindsym $mod+f fullscreen toggle
+
+# Change container layout.
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Toggle tiling / floating.
+bindsym $mod+Shift+space floating toggle
+
+# Change focus between tiling/floating.
+bindsym $mod+space focus mode_toggle
+
+# Switch workspaces.
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+## Lock workspace 1 to a second monitor.
+#workspace 1 output DP2
+#workspace 2 output HDMI1
+#workspace 3 output HDMI1
+#workspace 4 output HDMI1
+#workspace 5 output HDMI1
+#workspace 6 output HDMI1
+#workspace 7 output HDMI1
+#workspace 8 output HDMI1
+#workspace 9 output HDMI1
+#workspace 10 output HDMI1
+
+# Move focused container to workspace.
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# Reload i3 configuration.
+bindsym $mod+Shift+c reload
+
+# Restart i3 in place.
+bindsym $mod+Shift+r restart
+
+# Exit i3.
+bindsym $mod+Shift+e exec --no-startup-id i3-msg exit
+
+# Resize window.
+mode "resize" {
+        bindsym j resize shrink width 4 px or 4 ppt
+        bindsym k resize grow height 4 px or 4 ppt
+        bindsym l resize shrink height 4 px or 4 ppt
+        bindsym semicolon resize grow width 4 px or 4 ppt
+        bindsym Left resize shrink width 4 px or 4 ppt
+        bindsym Down resize grow height 4 px or 4 ppt
+        bindsym Up resize shrink height 4 px or 4 ppt
+        bindsym Right resize grow width 4 px or 4 ppt
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+bindsym $mod+r mode "resize"
+
+## Print screen binds.
+## Primary monitor.
+#bindsym Print exec --no-startup-id scrot 'scr_%Y%m%d_%H%M%S.png' -e 'convert $f -crop 1920x1080+1080+375 tmp.png && mv tmp.png $f && mv $f ~/pic/screen'
+## Secondary monitor.
+#bindsym Ctrl+Print exec --no-startup-id scrot 'scr_%Y%m%d_%H%M%S.png' -e 'convert $f -crop 1080x1920+0+0 tmp.png && mv tmp.png $f && mv $f ~/pic/screen'
+## All monitors.
+#bindsym Ctrl+Shift+Print exec --no-startup-id scrot 'scr_%Y%m%d_%H%M%S.png' -e 'mv $f ~/pic/screen'
+## Flameshot screen annotation bind.
+#bindsym Shift+Print exec --no-startup-id flameshot gui
+#
+## Wacom drawing tablet focus main monitor.
+#bindsym $mod+x exec --no-startup-id xsetwacom set "Wacom One by Wacom S Pen stylus" MapToOutput HDMI1

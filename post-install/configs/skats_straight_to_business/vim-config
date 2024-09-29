@@ -1,0 +1,85 @@
+" Plugins.
+set nocompatible
+call plug#begin()
+Plug 'sheerun/vim-polyglot'
+Plug 'sainnhe/everforest'
+call plug#end()
+
+" Important!!
+if has('termguicolors')
+  set termguicolors
+endif
+
+" For dark version.
+set background=dark
+
+" Set contrast.
+" This configuration option should be placed before `colorscheme everforest`.
+" Available values: 'hard', 'medium'(default), 'soft'
+let g:everforest_background='soft'
+
+" For better performance
+let g:everforest_better_performance=1
+
+let g:everforest_transparent_background=1
+
+colorscheme everforest
+
+" Map CTRL+h/CTRL+l to switch tabs.
+map <C-h> :tabp <CR>
+map <C-l> :tabn <CR>
+
+" Disable indentation.
+filetype indent off
+filetype plugin indent off
+set indentexpr=
+set noautoindent
+set nocindent
+set nosmartindent
+
+" Enable syntax highlighting.
+syntax on
+
+" Enable line numbering.
+set number
+
+" Disable intro message.
+set shortmess=I
+
+" Set tab/shift width to 4 spaces.
+set tabstop=4
+set shiftwidth=4
+
+" Prevent words from being split across 2 lines.
+set linebreak
+
+" Try to display as much text as possible.
+set display+=lastline
+
+" Prevent conflicts with system keybinds.
+set timeout timeoutlen=100 ttimeoutlen=100
+
+" Don't wrap lines by default.
+set nowrap
+
+" Disable F1 help menu.
+map <F1> <Esc>
+imap <F1> <Esc>
+
+" Character encoding.
+set encoding=utf-8
+
+" Markdown settings.
+autocmd Filetype markdown set wrap
+autocmd Filetype markdown set spell
+
+" LaTeX settings.
+autocmd Filetype tex set wrap
+autocmd Filetype tex set spell
+autocmd Filetype tex autocmd BufWritePost * !pdflatex "%"
+
+" Small tabs for these file types.
+autocmd Filetype yaml setlocal tabstop=2 shiftwidth=2 expandtab autoindent
+autocmd Filetype html setlocal tabstop=2 shiftwidth=2
+autocmd Filetype css  setlocal tabstop=2 shiftwidth=2
+autocmd Filetype js   setlocal tabstop=2 shiftwidth=2

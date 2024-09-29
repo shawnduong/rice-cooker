@@ -1,0 +1,64 @@
+configuration {
+	modi: "drun";
+	font: "Source Code Pro 12";
+}
+
+* {
+	background-color:  #0C0A0F;
+	font-color:        #DFDFDF;
+	accent-color:      #1C1A1F;
+	highlight-color:   #222222;
+	border-color:      #CCCCCC;
+}
+
+window {
+	background-color: @background-color;
+	border: 1px;
+	border-color: @accent-color;
+	border-radius: 8px;
+	height: 620px;
+	text-color: @font-color;
+	width: 512px;
+}
+
+inputbar {
+	background-color: @background-color;
+	border: 0px 0px 1px 0px;
+	border-color: @border-color;
+	padding: 16px;
+	text-color: @font-color;
+}
+
+prompt {
+	background-color: @background-color;
+	text-color: @font-color;
+}
+
+listview {
+	border: 0px;
+	scrollbar: false;
+}
+
+element {
+	padding: 16px;
+}
+
+element normal.normal {
+	background-color: @background-color;
+	text-color: @font-color;
+}
+
+element alternate.normal {
+	background-color: @background-color;
+	text-color: @font-color;
+}
+
+element selected.normal {
+	background-color: @highlight-color;
+	text-color: @font-color;
+}
+
+entry {
+	text-color: @font-color;
+	placeholder: "";
+}

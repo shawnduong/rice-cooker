@@ -1,0 +1,105 @@
+# Use "glx" as a backend.
+backend = "glx";
+
+# GLX settings.
+glx-no-stencil = true;
+glx-copy-from-front = false;
+
+# Shadow settings.
+shadow = true;
+shadow-radius = 7;
+shadow-offset-x = -5;
+shadow-offset-y = -5;
+shadow-opacity = 0.75;
+shadow-ignore-shaped = false;
+
+# Applications to exclude from shadowing.
+shadow-exclude = [
+	"name  = 'cpt_frame_window'",
+    "name *= 'picom'",
+	"name *= 'rofi'",
+	"name *= 'polybar'",
+	"(class_g = 'firefox' || class_g = 'Thunderbird') && (window_type = 'utility' || window_type = 'popup_menu') && argb"
+];
+
+# Opacity settings.
+inactive-opacity = 1;
+active-opacity = 1;
+frame-opacity = 1;
+inactive-opacity-override = false;
+
+# Background blur settings.
+blur-background-fixed = false;
+blur-background-exclude = [
+    "window_type = 'dock'",
+    "window_type = 'desktop'"
+];
+
+# Fade settings.
+fading = true;
+fade-delta = 4;
+fade-in-step = 0.03;
+fade-out-step = 0.03;
+
+# Applications to exclude from fading.
+fade-exclude = [ ];
+
+# Try to detect WM windows and mark them as active.
+mark-wmwin-focused = true;
+
+# Mark all non-WM but override-redirect windows active (e.g. menus).
+mark-ovredir-focused = true;
+
+# Use EWMH _NET_WM_ACTIVE_WINDOW to determine which window is focused instead of using FocusIn/Out events.
+use-ewmh-active-win = true;
+
+# Detect rounded corners and treat them as rectangular when --shadow-ignore-shaped is on.
+detect-rounded-corners = true;
+
+# Detect _NET_WM_OPACITY on client windows, useful for window managers not passing _NET_WM_OPACITY of client windows to frame windows.
+# This prevents opacity being ignored for some apps.
+detect-client-opacity = true;
+
+# Vertical synchronization: match the refresh rate of the monitor.
+vsync = true;
+
+# Enable DBE painting mode, intended to use with VSync to (hopefully) eliminate tearing.
+dbe = false;
+
+# Unredirect all windows if a full-screen opaque window is detected, to maximize performance for full-screen windows, like games.
+unredir-if-possible = false;
+
+# Specify a list of conditions of windows that should always be considered focused.
+focus-exclude = [ ];
+
+# Use WM_TRANSIENT_FOR to group windows, and consider windows in the same group focused at the same time.
+detect-transient = true;
+
+# Use WM_CLIENT_LEADER to group windows, and consider windows in the same group focused at the same time.
+# WM_TRANSIENT_FOR has higher priority if --detect-transient is enabled, too.
+detect-client-leader = true;
+
+# Window type settings.
+wintypes:
+{
+    tooltip =
+    {
+        # fade: Fade the particular type of windows.
+        fade = true;
+        # shadow: Give those windows shadow
+        shadow = false;
+        # opacity: Default opacity for the type of windows.
+        opacity = 0.85;
+        # focus: Whether to always consider windows of this type focused.
+        focus = true;
+    };
+};
+
+# Use X Sync fence to sync clients' draw calls. Needed on nvidia-drivers with GLX backend for some users.
+xrender-sync-fence = true;
+
+# st transparency focus rules.
+opacity-rule = [
+	"90:class_g = 'st-256color' && focused",
+	"80:class_g = 'st-256color' && !focused"
+];

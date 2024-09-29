@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# If 2 monitors, activate both wallpapers.
+if [ "$(xrandr --listmonitors | grep -c 'Monitors:')" -gt 1 ]; then
+	feh --no-fehbg --bg-fill \
+		"/home/$USER/pic/wallpapers/wallpaper_primary" \
+		"/home/$USER/pic/wallpapers/wallpaper_secondary" \
+	2>/dev/null
+else
+	feh --no-fehbg --bg-fill \
+		"/home/$USER/pic/wallpapers/wallpaper_primary" \
+	2>/dev/null
+fi
