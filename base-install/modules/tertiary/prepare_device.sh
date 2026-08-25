@@ -19,7 +19,7 @@ prepare_device()
 
 	flag 3000
 
-	if [[ "$device" == "nvme*" ]]; then
+	if [[ "$device" == "nvme"* ]]; then
 		devBoot="/dev/${device}p1"
 		devLvm="/dev/${device}p2"
 	else

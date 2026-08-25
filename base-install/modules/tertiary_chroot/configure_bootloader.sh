@@ -11,7 +11,7 @@ configure_bootloader()
 
 	echo -n " Configuring bootloader..."
 
-	if [[ "$device" == "nvme*" ]]; then
+	if [[ "$device" == "nvme"* ]]; then
 		devLvm="/dev/${device}p2"
 	else
 		devLvm="/dev/${device}2"
